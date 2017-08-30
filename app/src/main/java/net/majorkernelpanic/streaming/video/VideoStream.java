@@ -463,7 +463,8 @@ public abstract class VideoStream extends MediaStream {
 						Log.e(TAG,"No buffer available !");
 					}
 				} finally {
-					mCamera.addCallbackBuffer(data);
+                    if (mCamera != null)
+					    mCamera.addCallbackBuffer(data);
 				}				
 			}
 		};
