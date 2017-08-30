@@ -1,0 +1,4 @@
+#Tue Aug 15 11:05:48 CST 2017
+base.0=/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4
+renamed.0=classes.dex
+file.0=/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/5/slice_4/classes.dex

@@ -1,0 +1,803 @@
+[
+    {
+        "outputFile": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+        "map": [
+            {
+                "to": {
+                    "startLine": 2,
+                    "startColumn": 4,
+                    "startOffset": 55,
+                    "endLine": 5,
+                    "endColumn": 19,
+                    "endOffset": 167
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 6,
+                    "startColumn": 4,
+                    "startOffset": 172,
+                    "endLine": 9,
+                    "endColumn": 19,
+                    "endOffset": 278
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 10,
+                    "startColumn": 4,
+                    "startOffset": 283,
+                    "endLine": 21,
+                    "endColumn": 19,
+                    "endOffset": 644
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 22,
+                    "startColumn": 4,
+                    "startOffset": 649,
+                    "endLine": 33,
+                    "endColumn": 19,
+                    "endOffset": 961
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 34,
+                    "startColumn": 4,
+                    "startOffset": 966,
+                    "endLine": 37,
+                    "endColumn": 19,
+                    "endOffset": 1079
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 38,
+                    "startColumn": 4,
+                    "startOffset": 1084,
+                    "endLine": 41,
+                    "endColumn": 19,
+                    "endOffset": 1190
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 42,
+                    "startColumn": 4,
+                    "startOffset": 1195,
+                    "endLine": 47,
+                    "endColumn": 19,
+                    "endOffset": 1367
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 48,
+                    "startColumn": 4,
+                    "startOffset": 1372,
+                    "endLine": 53,
+                    "endColumn": 19,
+                    "endOffset": 1529
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 54,
+                    "startColumn": 4,
+                    "startOffset": 1534,
+                    "endLine": 59,
+                    "endColumn": 19,
+                    "endOffset": 1713
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/arrays.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 60,
+                    "startColumn": 4,
+                    "startOffset": 1718,
+                    "endColumn": 82,
+                    "endOffset": 1796
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 61,
+                    "startColumn": 4,
+                    "startOffset": 1801,
+                    "endColumn": 194,
+                    "endOffset": 1991
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 62,
+                    "startColumn": 4,
+                    "startOffset": 1996,
+                    "endColumn": 115,
+                    "endOffset": 2107
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 63,
+                    "startColumn": 4,
+                    "startOffset": 2112,
+                    "endColumn": 128,
+                    "endOffset": 2236
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 64,
+                    "startColumn": 4,
+                    "startOffset": 2241,
+                    "endColumn": 45,
+                    "endOffset": 2282
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 65,
+                    "startColumn": 4,
+                    "startOffset": 2287,
+                    "endColumn": 154,
+                    "endOffset": 2437
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 66,
+                    "startColumn": 4,
+                    "startOffset": 2442,
+                    "endColumn": 45,
+                    "endOffset": 2483
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 67,
+                    "startColumn": 4,
+                    "startOffset": 2488,
+                    "endColumn": 91,
+                    "endOffset": 2575
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 68,
+                    "startColumn": 4,
+                    "startOffset": 2580,
+                    "endColumn": 42,
+                    "endOffset": 2618
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 69,
+                    "startColumn": 4,
+                    "startOffset": 2623,
+                    "endColumn": 113,
+                    "endOffset": 2732
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 70,
+                    "startColumn": 4,
+                    "startOffset": 2737,
+                    "endColumn": 59,
+                    "endOffset": 2792
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 71,
+                    "startColumn": 4,
+                    "startOffset": 2797,
+                    "endColumn": 45,
+                    "endOffset": 2838
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 72,
+                    "startColumn": 4,
+                    "startOffset": 2843,
+                    "endColumn": 80,
+                    "endOffset": 2919
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 73,
+                    "startColumn": 4,
+                    "startOffset": 2924,
+                    "endColumn": 55,
+                    "endOffset": 2975
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 74,
+                    "startColumn": 4,
+                    "startOffset": 2980,
+                    "endColumn": 43,
+                    "endOffset": 3019
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 75,
+                    "startColumn": 4,
+                    "startOffset": 3024,
+                    "endColumn": 59,
+                    "endOffset": 3079
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 76,
+                    "startColumn": 4,
+                    "startOffset": 3084,
+                    "endColumn": 38,
+                    "endOffset": 3118
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 77,
+                    "startColumn": 4,
+                    "startOffset": 3123,
+                    "endColumn": 41,
+                    "endOffset": 3160
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 78,
+                    "startColumn": 4,
+                    "startOffset": 3165,
+                    "endColumn": 39,
+                    "endOffset": 3200
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 79,
+                    "startColumn": 4,
+                    "startOffset": 3205,
+                    "endColumn": 46,
+                    "endOffset": 3247
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml",
+                    "position": {
+                        "startLine": 57,
+                        "startColumn": 4,
+                        "startOffset": 3802,
+                        "endColumn": 46,
+                        "endOffset": 3844
+                    }
+                }
+            },
+            {
+                "to": {
+                    "startLine": 80,
+                    "startColumn": 4,
+                    "startOffset": 3252,
+                    "endColumn": 59,
+                    "endOffset": 3307
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 81,
+                    "startColumn": 4,
+                    "startOffset": 3312,
+                    "endColumn": 74,
+                    "endOffset": 3382
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 82,
+                    "startColumn": 4,
+                    "startOffset": 3387,
+                    "endColumn": 37,
+                    "endOffset": 3420
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 83,
+                    "startColumn": 4,
+                    "startOffset": 3425,
+                    "endColumn": 63,
+                    "endOffset": 3484
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 84,
+                    "startColumn": 4,
+                    "startOffset": 3489,
+                    "endColumn": 62,
+                    "endOffset": 3547
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 85,
+                    "startColumn": 4,
+                    "startOffset": 3552,
+                    "endColumn": 102,
+                    "endOffset": 3650
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 86,
+                    "startColumn": 4,
+                    "startOffset": 3655,
+                    "endColumn": 49,
+                    "endOffset": 3700
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 87,
+                    "startColumn": 4,
+                    "startOffset": 3705,
+                    "endColumn": 48,
+                    "endOffset": 3749
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 88,
+                    "startColumn": 4,
+                    "startOffset": 3754,
+                    "endColumn": 46,
+                    "endOffset": 3796
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 89,
+                    "startColumn": 4,
+                    "startOffset": 3801,
+                    "endColumn": 51,
+                    "endOffset": 3848
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 90,
+                    "startColumn": 4,
+                    "startOffset": 3853,
+                    "endColumn": 51,
+                    "endOffset": 3900
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 91,
+                    "startColumn": 4,
+                    "startOffset": 3905,
+                    "endColumn": 70,
+                    "endOffset": 3971
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 92,
+                    "startColumn": 4,
+                    "startOffset": 3976,
+                    "endColumn": 50,
+                    "endOffset": 4022
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 93,
+                    "startColumn": 4,
+                    "startOffset": 4027,
+                    "endColumn": 60,
+                    "endOffset": 4083
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 94,
+                    "startColumn": 4,
+                    "startOffset": 4088,
+                    "endColumn": 55,
+                    "endOffset": 4139
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 95,
+                    "startColumn": 4,
+                    "startOffset": 4144,
+                    "endColumn": 67,
+                    "endOffset": 4207
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 96,
+                    "startColumn": 4,
+                    "startOffset": 4212,
+                    "endColumn": 46,
+                    "endOffset": 4254
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 97,
+                    "startColumn": 4,
+                    "startOffset": 4259,
+                    "endColumn": 122,
+                    "endOffset": 4377
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 98,
+                    "startColumn": 4,
+                    "startOffset": 4382,
+                    "endColumn": 48,
+                    "endOffset": 4426
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 99,
+                    "startColumn": 4,
+                    "startOffset": 4431,
+                    "endColumn": 55,
+                    "endOffset": 4482
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 100,
+                    "startColumn": 4,
+                    "startOffset": 4487,
+                    "endColumn": 56,
+                    "endOffset": 4539
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 101,
+                    "startColumn": 4,
+                    "startOffset": 4544,
+                    "endColumn": 68,
+                    "endOffset": 4608
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 102,
+                    "startColumn": 4,
+                    "startOffset": 4613,
+                    "endColumn": 50,
+                    "endOffset": 4659
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 103,
+                    "startColumn": 4,
+                    "startOffset": 4664,
+                    "endColumn": 46,
+                    "endOffset": 4706
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 104,
+                    "startColumn": 4,
+                    "startOffset": 4711,
+                    "endColumn": 53,
+                    "endOffset": 4760
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 105,
+                    "startColumn": 4,
+                    "startOffset": 4765,
+                    "endColumn": 79,
+                    "endOffset": 4840
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 106,
+                    "startColumn": 4,
+                    "startOffset": 4845,
+                    "endColumn": 55,
+                    "endOffset": 4896
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 107,
+                    "startColumn": 4,
+                    "startOffset": 4901,
+                    "endColumn": 67,
+                    "endOffset": 4964
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 108,
+                    "startColumn": 4,
+                    "startOffset": 4969,
+                    "endColumn": 68,
+                    "endOffset": 5033
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 109,
+                    "startColumn": 4,
+                    "startOffset": 5038,
+                    "endColumn": 51,
+                    "endOffset": 5085
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 110,
+                    "startColumn": 4,
+                    "startOffset": 5090,
+                    "endColumn": 63,
+                    "endOffset": 5149
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 111,
+                    "startColumn": 4,
+                    "startOffset": 5154,
+                    "endColumn": 53,
+                    "endOffset": 5203
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 112,
+                    "startColumn": 4,
+                    "startOffset": 5208,
+                    "endColumn": 68,
+                    "endOffset": 5272
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 113,
+                    "startColumn": 4,
+                    "startOffset": 5277,
+                    "endColumn": 51,
+                    "endOffset": 5324
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 114,
+                    "startColumn": 4,
+                    "startOffset": 5329,
+                    "endColumn": 49,
+                    "endOffset": 5374
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            },
+            {
+                "to": {
+                    "startLine": 115,
+                    "startColumn": 4,
+                    "startOffset": 5379,
+                    "endColumn": 63,
+                    "endOffset": 5438
+                },
+                "from": {
+                    "file": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/values/strings.xml"
+                }
+            }
+        ]
+    }
+]

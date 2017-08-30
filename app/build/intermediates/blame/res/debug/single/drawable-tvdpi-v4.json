@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_small_off_client.png",
+        "source": "/home/guoyuefeng/.android/build-cache/a979a049b30786f2dfa520cfa6cd1fafd390802e/output/res/drawable-tvdpi-v4/ic_plusone_small_off_client.png"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_standard_off_client.png",
+        "source": "/home/guoyuefeng/.android/build-cache/a979a049b30786f2dfa520cfa6cd1fafd390802e/output/res/drawable-tvdpi-v4/ic_plusone_standard_off_client.png"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_medium_off_client.png",
+        "source": "/home/guoyuefeng/.android/build-cache/a979a049b30786f2dfa520cfa6cd1fafd390802e/output/res/drawable-tvdpi-v4/ic_plusone_medium_off_client.png"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-tvdpi-v4/ic_plusone_tall_off_client.png",
+        "source": "/home/guoyuefeng/.android/build-cache/a979a049b30786f2dfa520cfa6cd1fafd390802e/output/res/drawable-tvdpi-v4/ic_plusone_tall_off_client.png"
+    }
+]

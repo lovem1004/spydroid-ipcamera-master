@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/interpolator/mr_linear_out_slow_in.xml",
+        "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/interpolator/mr_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/interpolator/mr_fast_out_slow_in.xml",
+        "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/interpolator/mr_fast_out_slow_in.xml"
+    }
+]
