@@ -436,6 +436,7 @@ public abstract class VideoStream extends MediaStream {
 		mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);	
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,debugger.getEncoderColorFormat());
 		mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+		mediaFormat.setInteger(MediaFormat.KEY_ROTATION, mOrientation);//数据旋转方向
 		mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
 		mMediaCodec.start();
 
@@ -451,7 +452,7 @@ public abstract class VideoStream extends MediaStream {
 					//Log.d(TAG,"Measured: "+1000000L/(now-oldnow)+" fps.");
 				}
 				try {
-					int bufferIndex = mMediaCodec.dequeueInputBuffer(500000);
+					int bufferIndex = mMediaCodec.dequeueInputBuffer(1000000);
 					if (bufferIndex>=0) {
 						inputBuffers[bufferIndex].clear();
 						//Log.e(TAG, "david data[0] = [" + data[0] + "]");

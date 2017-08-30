@@ -74,7 +74,7 @@ public class SpydroidActivity extends FragmentActivity {
 	private PowerManager.WakeLock mWakeLock;
 	private SectionsPagerAdapter mAdapter;
 	private SurfaceView mSurfaceView;
-	private SurfaceView mSurfaceView_back;
+	private SurfaceView mSurfaceView1;
 	private SpydroidApplication mApplication;
 	private CustomHttpServer mHttpServer;
 	private RtspServer mRtspServer;
@@ -96,9 +96,12 @@ public class SpydroidActivity extends FragmentActivity {
 			SessionBuilder.getInstance().setSurfaceView(mSurfaceView);
 			SessionBuilder.getInstance().setPreviewOrientation(90);
 
-			mSurfaceView_back = (SurfaceView)findViewById(R.id.handset_camera_view_back);
-			SessionBuilder.getInstance_back().setSurfaceView(mSurfaceView_back);
+			mSurfaceView1 = (SurfaceView)findViewById(R.id.handset_camera_view1);
+			SessionBuilder.getInstance_back().setSurfaceView(mSurfaceView1);
 			SessionBuilder.getInstance_back().setPreviewOrientation(90);
+            mSurfaceView1.setZOrderOnTop(true);
+			mSurfaceView1.setZOrderMediaOverlay(true);
+
 			
 		} else {
 
@@ -348,10 +351,9 @@ public class SpydroidActivity extends FragmentActivity {
 		public Fragment getItem(int i) {
 			if (device == HANDSET) {
 				switch (i) {
-				    case 0: return new HandsetFragment();
-				    case 1: return new PreviewFragment();
-				    case 2: return new AboutFragment();
-					case 3: return new PreviewFragment_back();
+				case 0: return new HandsetFragment();
+				case 1: return new PreviewFragment();
+				case 2: return new AboutFragment();
 				}
 			} else {
 				switch (i) {
@@ -364,7 +366,7 @@ public class SpydroidActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return device==HANDSET ? 4 : 2;
+			return device==HANDSET ? 3 : 2;
 		}
 
 		public HandsetFragment getHandsetFragment() {
@@ -387,10 +389,9 @@ public class SpydroidActivity extends FragmentActivity {
 		public CharSequence getPageTitle(int position) {
 			if (device == HANDSET) {
 				switch (position) {
-				    case 0: return getString(R.string.page0);
-				    case 1: return getString(R.string.page1);
-				    case 2: return getString(R.string.page2);
-					case 3: return getString(R.string.page3);
+				case 0: return getString(R.string.page0);
+				case 1: return getString(R.string.page1);
+				case 2: return getString(R.string.page2);
 				}        		
 			} else {
 				switch (position) {

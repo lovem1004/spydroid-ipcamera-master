@@ -25,6 +25,8 @@
     
     <!-- RESOLUTION -->
     <string-array name="videoResolutionArray">
+        <item>1920x1080</item>
+        <item>1280x960</item>
         <item>1280x720</item>
         <item>640x480</item>
         <item>320x240</item>
@@ -33,6 +35,7 @@
     
     <!-- FRAMERATE -->
     <string-array name="videoFramerateArray">
+        <item>30 fps</item>
         <item>20 fps</item>
         <item>15 fps</item>
         <item>10 fps</item>
@@ -40,6 +43,7 @@
     </string-array>
 
     <string-array name="videoFramerateValues">
+        <item>30</item>
         <item>20</item>
         <item>15</item>
         <item>10</item>
@@ -48,6 +52,7 @@
     
     <!-- BITRATE -->
     <string-array name="videoBitrateArray">
+        <item>20000 kbps</item>
         <item>5000 kbps</item>
         <item>2000 kbps</item>
         <item>1000 kbps</item>
@@ -61,6 +66,7 @@
     </string-array>
 
     <string-array name="videoBitrateValues">
+        <item>20000</item>
         <item>5000</item>
         <item>2000</item>
         <item>1000</item>

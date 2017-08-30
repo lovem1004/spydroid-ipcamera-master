@@ -27,7 +27,10 @@ import java.io.IOException;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
+import android.text.format.Time;
 import android.util.Log;
+
+import static android.R.attr.path;
 
 /**
  * 
@@ -42,8 +45,6 @@ import android.util.Log;
 public class H264Packetizer extends AbstractPacketizer implements Runnable {
 
 	public final static String TAG = "H264Packetizer";
-	private static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test333.h264";
-	private BufferedOutputStream outputStream;
 
 	private Thread t = null;
 	private int naluLength = 0;
@@ -53,10 +54,23 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	byte[] header = new byte[5];	
 	private int count = 0;
 	private int streamType = 1;
+	private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test88.h264";
+	private BufferedOutputStream outputStream;
 
 
 	public H264Packetizer() {
 		super();
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		Log.i(TAG, ""+year+month+day+hour+minute+second);
+		String filename=""+year+month+day+hour+minute+second;
+		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
 		socket.setClockFrequency(90000);
 	}
 

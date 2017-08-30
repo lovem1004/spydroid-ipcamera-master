@@ -223,7 +223,7 @@ public abstract class MediaStream implements Stream {
 		if (mMode != MODE_MEDIARECORDER_API) {
 			encodeWithMediaCodec();
 		} else {
-			encodeWithMediaRecorder();
+			encodeWithMediaCodec();
 		}
 
 	}
@@ -285,10 +285,10 @@ public abstract class MediaStream implements Stream {
 
 		mReceiver = new LocalSocket();
 		mReceiver.connect( new LocalSocketAddress(LOCAL_ADDR+mSocketId));
-		mReceiver.setReceiveBufferSize(500000);
+		mReceiver.setReceiveBufferSize(1000000);
 		mReceiver.setSoTimeout(3000);
 		mSender = mLss.accept();
-		mSender.setSendBufferSize(500000);
+		mSender.setSendBufferSize(1000000);
 	}
 
 	protected void closeSockets() {

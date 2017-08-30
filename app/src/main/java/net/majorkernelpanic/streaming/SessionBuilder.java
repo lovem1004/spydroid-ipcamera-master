@@ -207,7 +207,7 @@ public class SessionBuilder {
 			VideoStream video = session.getVideoTrack();
 			video.setFlashState(mFlash);
 			video.setVideoQuality(mVideoQuality);
-			video.setSurfaceView(mSurfaceView_back);
+			video.setSurfaceView(mSurfaceView);
 			video.setPreviewOrientation(mOrientation);
 			//video.setDestinationPorts(5006);
 			video.setDestinationPorts(0);
