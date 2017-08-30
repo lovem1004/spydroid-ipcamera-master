@@ -1,11 +1,23 @@
 [
     {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/icon.png",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/drawable-mdpi/icon.png"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/quit.png",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/drawable-mdpi/quit.png"
+    },
+    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/quit.png",
         "source": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/drawable-mdpi/quit.png"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/settings.png",
         "source": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/src/main/res/drawable-mdpi/settings.png"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/settings.png",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/drawable-mdpi/settings.png"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable-mdpi/icon.png",

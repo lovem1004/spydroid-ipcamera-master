@@ -4,12 +4,12 @@
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/abc_alert_dialog_button_bar_material.xml"
     },
     {
-        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
-        "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/select_dialog_item_material.xml"
-    },
-    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/abc_action_bar_title_item.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/abc_action_bar_title_item.xml"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/select_dialog_item_material.xml",
+        "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/select_dialog_item_material.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_radio.xml",
@@ -40,6 +40,10 @@
         "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/layout/mr_volume_control.xml"
     },
     {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/about.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/about.xml"
+    },
+    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/support_simple_spinner_dropdown_item.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/support_simple_spinner_dropdown_item.xml"
     },
@@ -52,6 +56,10 @@
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/abc_search_view.xml"
     },
     {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/preview.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/preview.xml"
+    },
+    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_layout.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/abc_list_menu_item_layout.xml"
     },
@@ -62,6 +70,10 @@
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/select_dialog_multichoice_material.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/select_dialog_multichoice_material.xml"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/spydroid.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/spydroid.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/mr_playback_control.xml",
@@ -100,6 +112,10 @@
         "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/layout/mr_controller_material_dialog_b.xml"
     },
     {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/main.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/main.xml"
+    },
+    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/abc_list_menu_item_checkbox.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/abc_list_menu_item_checkbox.xml"
     },
@@ -126,6 +142,10 @@
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/select_dialog_singlechoice_material.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/layout/select_dialog_singlechoice_material.xml"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/tablet.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/tablet.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/mr_chooser_list_item.xml",
@@ -210,6 +230,10 @@
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/cast_intro_overlay.xml",
         "source": "/home/guoyuefeng/.android/build-cache/f2f47f0269cf0edcea34eb1a1e36377404e2cd1d/output/res/layout/cast_intro_overlay.xml"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/preview_back.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/layout/preview_back.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/layout/main.xml",

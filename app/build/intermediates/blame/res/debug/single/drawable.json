@@ -72,12 +72,12 @@
         "source": "/home/guoyuefeng/.android/build-cache/cb69f7fc235338b31966454828043ce33f0f3530/output/res/drawable/common_google_signin_btn_text_dark_focused.xml"
     },
     {
-        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/mr_vol_type_audiotrack_light.xml",
-        "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/drawable/mr_vol_type_audiotrack_light.xml"
-    },
-    {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/abc_tab_indicator_material.xml",
         "source": "/home/guoyuefeng/.android/build-cache/673452bca2a152e4094ceb4833ae91494c8e4987/output/res/drawable/abc_tab_indicator_material.xml"
+    },
+    {
+        "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/mr_vol_type_audiotrack_light.xml",
+        "source": "/home/guoyuefeng/.android/build-cache/466fa668105e49dac7bcfcc6c52b5344d226b959/output/res/drawable/mr_vol_type_audiotrack_light.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/cast_ic_mini_controller_stop.xml",
@@ -138,6 +138,10 @@
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/cast_ic_notification_forward.xml",
         "source": "/home/guoyuefeng/.android/build-cache/f2f47f0269cf0edcea34eb1a1e36377404e2cd1d/output/res/drawable/cast_ic_notification_forward.xml"
+    },
+    {
+        "merged": "/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/preview.xml",
+        "source": "/home/dengfengwang/spydroid-ipcamera-master/app/src/main/res/drawable/preview.xml"
     },
     {
         "merged": "/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/res/merged/debug/drawable/mr_dialog_material_background_dark.xml",
