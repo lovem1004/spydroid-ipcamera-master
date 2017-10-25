@@ -22,11 +22,19 @@ package net.majorkernelpanic.streaming.rtp;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileFilter;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
+import android.os.StatFs;
+import android.text.format.Formatter;
 import android.text.format.Time;
 import android.util.Log;
 
@@ -54,27 +62,21 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	byte[] header = new byte[5];	
 	private int count = 0;
 	private int streamType = 1;
-	private String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test88.h264";
+	private String path;
 	private BufferedOutputStream outputStream;
+	public static final int SIZETYPE_B = 1;//获取文件大小单位为B的double值
+	public static final int SIZETYPE_KB = 2;//获取文件大小单位为KB的double值
+	public static final int SIZETYPE_MB = 3;//获取文件大小单位为MB的double值
+	public static final int SIZETYPE_GB = 4;//获取文件大小单位为GB的double值
 
 
 	public H264Packetizer() {
 		super();
-		Time t=new Time();
-		t.setToNow();
-		int year=t.year;
-		int month=t.month;
-		int day=t.monthDay;
-		int hour=t.hour;
-		int minute=t.minute;
-		int second=t.second;
-		Log.i(TAG, ""+year+month+day+hour+minute+second);
-		String filename=""+year+month+day+hour+minute+second;
-		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
 		socket.setClockFrequency(90000);
 	}
 
 	public void start() {
+		Log.d(TAG,"start.......");
 		createfile();
 		if (t == null) {
 			t = new Thread(this);
@@ -107,6 +109,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 
 	public void run() {
 		long duration = 0, delta2 = 0;
+		long delta3 = 0;
 		Log.d(TAG,"H264 packetizer started !");
 		stats.reset();
 		count = 0;
@@ -131,6 +134,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				// Every 3 secondes, we send two packets containing NALU type 7 (sps) and 8 (pps)
 				// Those should allow the H264 stream to be decoded even if no SDP was sent to the decoder.				
 				delta2 += duration/1000000;
+				delta3 += duration/1000000;
 				if (delta2>3000) {
 					delta2 = 0;
 					if (sps != null) {
@@ -147,7 +151,16 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 						socket.markNextPacket();
 						System.arraycopy(pps, 0, buffer, rtphl, pps.length);
 						super.send(rtphl+pps.length);
-					}					
+					}
+				}
+
+				//Every 1 minutes,we detect the phone's memory,if The remaining is less than 1 GB,
+				//we delete the oldest file.
+				if (delta3 > 60000) {
+					delta3 = 0;
+					if (getAvailableSize() < 1) {
+						DeleteOldFile();
+					}
 				}
 
 				stats.push(duration);
@@ -169,29 +182,17 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	 */
 	@SuppressLint("NewApi")
 	private void send() throws IOException, InterruptedException {
-		//Log.e(TAG, "david6 send() begin");
 		int sum = 1, len = 0, type;
 
 		if (streamType == 0) {
 			// NAL units are preceeded by their length, we parse the length
 			fill(header,0,5);
-//			for(int i=0; i< header.length; i++) {
-//				Log.e(TAG, "guoyuefeng111 header[" + i + "] = " + header[i]);
-//			}
-			//outputStream.write(header, 0, 5);
-			//Log.e(TAG, "david6 header111 toString = [" + header.toString() + "]");
 			ts += delay;
 			naluLength = header[3]&0xFF | (header[2]&0xFF)<<8 | (header[1]&0xFF)<<16 | (header[0]&0xFF)<<24;
 			if (naluLength>100000 || naluLength<0) resync();
 		} else if (streamType == 1) {
 			// NAL units are preceeded with 0x00000001
 			fill(header,0,5);
-			//outputStream.write(header, 0, 5);
-//			for(int i=0; i< header.length; i++) {
-//				Log.e(TAG, "guoyuefeng222 header[" + i + "] = " + header[i]);
-//			}
-			//outputStream.write(header, 0, 5);
-			//Log.e(TAG, "david6 header222 toString = [" + header.toString() + "]");
 			ts = ((MediaCodecInputStream)is).getLastBufferInfo().presentationTimeUs*1000L;
 			//ts += delay;
 			naluLength = is.available()+1;
@@ -204,11 +205,6 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		} else {
 			// Nothing preceededs the NAL units
 			fill(header,0,1);
-			for(int i=0; i< header.length; i++) {
-				Log.e(TAG, "guoyuefeng333 header[" + i + "] = " + header[i]);
-			}
-			//outputStream.write(header, 0, 1);
-			//Log.e(TAG, "david6 header333 toString = [" + header.toString() + "]");
 			header[4] = header[0];
 			ts = ((MediaCodecInputStream)is).getLastBufferInfo().presentationTimeUs*1000L;
 			//ts += delay;
@@ -218,7 +214,6 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		// Parses the NAL unit type
 		type = header[4]&0x1F;
 
-		//Log.e(TAG,"-----------------------------------------------------david6 tpye = [" + type + "]");
 		// The stream already contains NAL unit type 7 or 8, we don't need 
 		// to add them to the stream ourselves
 		if (type == 7 || type == 8) {
@@ -230,19 +225,15 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			}
 		}
 
-		//Log.d(TAG,"- Nal unit length: " + naluLength + " delay: "+delay/1000000+" type: "+type);
 
 		// Small NAL unit => Single NAL unit 
 		if (naluLength<=MAXPACKETSIZE-rtphl-2) {
 			buffer = socket.requestBuffer();
 			buffer[rtphl] = header[4];
 			len = fill(buffer, rtphl+1,  naluLength-1);
-			//outputStream.write(buffer, rtphl+1, naluLength-1);
-			//Log.e(TAG, "david6 buffer111 toString = [" + buffer.toString() + "]");
 			socket.updateTimestamp(ts);
 			socket.markNextPacket();
 			super.send(naluLength+rtphl);
-			//Log.d(TAG,"----- Single NAL unit - len:"+len+" delay: "+delay);
 		}
 		// Large NAL unit => Split nal unit 
 		else {
@@ -260,8 +251,6 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				buffer[rtphl+1] = header[1];
 				socket.updateTimestamp(ts);
 				if ((len = fill(buffer, rtphl+2,  naluLength-sum > MAXPACKETSIZE-rtphl-2 ? MAXPACKETSIZE-rtphl-2 : naluLength-sum  ))<0) return; sum += len;
-				//outputStream.write(buffer, rtphl+2, naluLength-sum > MAXPACKETSIZE-rtphl-2 ? MAXPACKETSIZE-rtphl-2 : naluLength-sum);
-				//Log.e(TAG, "david6 buffer222 toString = [" + buffer.toString() + "]");
 				// Last packet before next NAL
 				if (sum >= naluLength) {
 					// End bit on
@@ -279,14 +268,11 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	private int fill(byte[] buffer, int offset,int length) throws IOException {
 		int sum = 0, len;
 		while (sum<length) {
-			//Log.e(TAG, "david4 read 222");
-            //Log.e(TAG, "david5 buffer = [" + buffer.toString() + "]");
 			len = is.read(buffer, offset+sum, length-sum);
-           // Log.e(TAG, "david5 ------------buffer = [" + buffer.toString() + "]");
 			if (len<0) {
 				throw new IOException("End of stream");
 			} else {
-				outputStream.write(buffer, offset+sum, length-sum);
+				outputStream.write(buffer, offset + sum, length - sum);
 				sum+=len;
 			}
 		}
@@ -328,6 +314,17 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 
 	private void createfile(){
 		//Log.e(TAG, "david path = [" + path + "]");
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month +1;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		Log.i(TAG, ""+year+month+day+hour+minute+second);
+		String filename=""+year+month+day+hour+minute+second;
+		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
 		File file = new File(path);
 		if(file.exists()){
 			file.delete();
@@ -339,4 +336,141 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		}
 	}
 
+	public static double getFileOrFilesSize(String filePath,int sizeType){
+		File file=new File(filePath);
+		long blockSize=0;
+		try {
+			if(file.isDirectory()){
+				blockSize = getFileSizes(file);
+			}else{
+				blockSize = getFileSize(file);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("获取文件大小","获取失败!");
+		}
+		return FormetFileSize(blockSize, sizeType);
+	}
+
+	/**
+	 * 获取指定文件大小
+	 * @param
+	 * @return
+	 * @throws Exception
+	 */
+	private static long getFileSize(File file) throws Exception
+	{
+		long size = 0;
+		if (file.exists()){
+			FileInputStream fis = null;
+			fis = new FileInputStream(file);
+			size = fis.available();
+			fis.close();
+		}
+		else{
+			file.createNewFile();
+			Log.e("获取文件大小","文件不存在!");
+		}
+		return size;
+	}
+
+	/**
+	 * 获取指定文件夹
+	 * @param f
+	 * @return
+	 * @throws Exception
+	 */
+	private static long getFileSizes(File f) throws Exception
+	{
+		long size = 0;
+		File flist[] = f.listFiles();
+		for (int i = 0; i < flist.length; i++){
+			if (flist[i].isDirectory()){
+				size = size + getFileSizes(flist[i]);
+			}
+			else{
+				size =size + getFileSize(flist[i]);
+			}
+		}
+		return size;
+	}
+
+	/**
+	 * 转换文件大小,指定转换的类型
+	 * @param fileS
+	 * @param sizeType
+	 * @return
+	 */
+	private static double FormetFileSize(long fileS,int sizeType)
+	{
+		DecimalFormat df = new DecimalFormat("#.00");
+		double fileSizeLong = 0;
+		switch (sizeType) {
+			case SIZETYPE_B:
+				fileSizeLong=Double.valueOf(df.format((double) fileS));
+				break;
+			case SIZETYPE_KB:
+				fileSizeLong=Double.valueOf(df.format((double) fileS / 1024));
+				break;
+			case SIZETYPE_MB:
+				fileSizeLong=Double.valueOf(df.format((double) fileS / 1048576));
+				break;
+			case SIZETYPE_GB:
+				fileSizeLong=Double.valueOf(df.format((double) fileS / 1073741824));
+				break;
+			default:
+				break;
+		}
+		return fileSizeLong;
+	}
+
+	private void DeleteOldFile(){
+		String path1 = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File parentFile = new File(path1);
+		File fileswp = null;
+		File[] files = parentFile.listFiles(fileFilter);//通过fileFileter过滤器来获取parentFile路径下的想要类型的子文件
+		for (int n = 0; n < files.length; n++) {
+			Log.d("wdf","files....." + files[n]);
+		}
+		for (int i = files.length - 1; i > 0; i--)
+		{
+			for (int j = 0; j < i; ++j) {
+				if ( files[j+1].lastModified() < files[j].lastModified()){
+					fileswp = files[j];
+					files[j] = files[j+1];
+					files[j+1] = fileswp;
+				}
+			}
+		}
+		files[0].delete();
+	}
+
+	public FileFilter fileFilter = new FileFilter() {
+		public boolean accept(File file) {
+			String tmp = file.getName().toLowerCase();
+			if (tmp.endsWith(".h264")) {
+				return true;
+			}
+			return false;
+		}
+	};
+
+	/**
+	 * 显示存储的剩余空间
+	 */
+	public long getAvailableSize(){
+		long RomSize =getAvailSpace(Environment.getExternalStorageDirectory().getAbsolutePath());//内部存储大小
+		Log.d("wdf","RomSize......" + RomSize / 1073741824);
+		//换算成GB
+		return RomSize / 1073741824;
+	}
+	/**
+	 * 获取某个目录的可用空间
+	 */
+	public long getAvailSpace(String path){
+		StatFs statfs = new StatFs(path);
+		long size = statfs.getBlockSize();//获取分区的大小
+		long count = statfs.getAvailableBlocks();//获取可用分区块的个数
+		return size*count;
+	}
 }
