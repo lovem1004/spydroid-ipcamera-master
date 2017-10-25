@@ -50,7 +50,7 @@ public class SpydroidApplication extends android.app.Application {
 	public final static String TAG = "SpydroidApplication";
 	
 	/** Default quality of video streams. */
-	public VideoQuality videoQuality = new VideoQuality(1280,960,30,5000000);
+	public VideoQuality videoQuality = new VideoQuality(1920,1080,30,5000000);
 
 	/** By default AMR is the audio encoder. */
 	public int audioEncoder = SessionBuilder.AUDIO_AAC;
@@ -103,13 +103,13 @@ public class SpydroidApplication extends android.app.Application {
 		SessionBuilder.getInstance() 
 		.setContext(getApplicationContext())
 		.setAudioEncoder(!settings.getBoolean("stream_audio", true)?0:audioEncoder)
-		.setVideoEncoder(!settings.getBoolean("stream_video", false)?0:videoEncoder)
+		.setVideoEncoder(!settings.getBoolean("stream_video", true)?0:videoEncoder)
 		.setVideoQuality(videoQuality);
 
 		SessionBuilder.getInstance_back()
 				.setContext(getApplicationContext())
 				.setAudioEncoder(!settings.getBoolean("stream_audio", true)?0:audioEncoder)
-				.setVideoEncoder(!settings.getBoolean("stream_video", false)?0:videoEncoder)
+				.setVideoEncoder(!settings.getBoolean("stream_video", true)?0:videoEncoder)
 				.setVideoQuality(videoQuality);
 
 		// Listens to changes of preferences

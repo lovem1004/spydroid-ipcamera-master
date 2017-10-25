@@ -87,6 +87,7 @@ public class RtspServer extends Service {
 
 	/** Key used in the SharedPreferences for the port used by the RTSP server. */
 	public final static String KEY_PORT = "rtsp_port";
+	public final static String KEY_PORT_BACK = "rtsp_port_back";
 
 	protected SessionBuilder mSessionBuilder;
 	protected SharedPreferences mSharedPreferences;
@@ -150,6 +151,10 @@ public class RtspServer extends Service {
 		return mPort;
 	}
 
+	public int getbackPort() {
+		//Log.e(TAG, "david1 getPort");
+		return mPort_back;
+	}
 	/**
 	 * Sets the port for the RTSP server to use.
 	 * @param port The port
@@ -159,7 +164,14 @@ public class RtspServer extends Service {
 		Editor editor = mSharedPreferences.edit();
 		editor.putString(KEY_PORT, String.valueOf(port));
 		editor.commit();
-	}	
+	}
+
+	public void setbackPort(int port) {
+		//Log.e(TAG, "david1 setPort");
+		Editor editor = mSharedPreferences.edit();
+		editor.putString(KEY_PORT_BACK, String.valueOf(port));
+		editor.commit();
+	}
 
 	/** 
 	 * Starts (or restart if needed, if for example the configuration 
@@ -270,7 +282,7 @@ public class RtspServer extends Service {
 		// Let's restore the state of the service 
 		mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 		mPort = Integer.parseInt(mSharedPreferences.getString(KEY_PORT, String.valueOf(mPort)));
-		mPort_back = DEFAULT_RTSP_PORT_BACK;
+		mPort_back = Integer.parseInt(mSharedPreferences.getString(KEY_PORT_BACK, String.valueOf(mPort_back)));
 		mEnabled = mSharedPreferences.getBoolean(KEY_ENABLED, mEnabled);
 
 		// If the configuration is modified, the server will adjust
@@ -296,7 +308,14 @@ public class RtspServer extends Service {
 					mRestart = true;
 					start();
 				}
-			}		
+			} else if (key.equals(KEY_PORT_BACK)) {
+				int port_back = Integer.parseInt(sharedPreferences.getString(KEY_PORT_BACK, String.valueOf(mPort_back)));
+				if (port_back != mPort_back) {
+					mPort_back = port_back;
+					mRestart = true;
+					start();
+				}
+			}
 			else if (key.equals(KEY_ENABLED)) {
 				mEnabled = sharedPreferences.getBoolean(KEY_ENABLED, mEnabled);
 				start();
@@ -346,7 +365,7 @@ public class RtspServer extends Service {
 	protected Session handleRequest(String uri, Socket client) throws IllegalStateException, IOException {
 		Log.e(TAG, "david123 client uri = " + uri);
 		Session session = null;
-		if (uri.indexOf("8086") != -1) {
+		if (uri.indexOf("front") != -1) {
 			Log.e(TAG, "david123 8086");
 			session = UriParser.parse(uri);
 			session.setOrigin(client.getLocalAddress().getHostAddress());

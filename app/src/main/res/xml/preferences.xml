@@ -82,7 +82,13 @@
             android:inputType="number"
             android:key="rtsp_port"
             android:summary="@string/settings32"
-            android:title="@string/settings31" />      
+            android:title="@string/settings31" />
+        <EditTextPreference
+            android:defaultValue="6086"
+            android:inputType="number"
+            android:key="rtsp_port_back"
+            android:summary="@string/settings32"
+            android:title="@string/settings33" />
     </PreferenceCategory>    
     
     <PreferenceCategory android:title="@string/settings14" >

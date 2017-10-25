@@ -54,7 +54,7 @@ public class HandsetFragment extends Fragment {
 
 	public final static String TAG = "HandsetFragment";
 	
-    private TextView mDescription1, mDescription2, mLine1, mLine2, mVersion, mSignWifi, mTextBitrate;
+    private TextView mDescription1, mDescription2, mLine1, mLine2, mLine3, mVersion, mSignWifi, mTextBitrate;
     private LinearLayout mSignInformation, mSignStreaming;
     private Animation mPulseAnimation;
     
@@ -74,6 +74,7 @@ public class HandsetFragment extends Fragment {
     	View rootView = inflater.inflate(R.layout.main,container,false);
         mLine1 = (TextView)rootView.findViewById(R.id.line1);
         mLine2 = (TextView)rootView.findViewById(R.id.line2);
+		mLine3 = (TextView)rootView.findViewById(R.id.line3);
         mDescription1 = (TextView)rootView.findViewById(R.id.line1_description);
         mDescription2 = (TextView)rootView.findViewById(R.id.line2_description);
         mVersion = (TextView)rootView.findViewById(R.id.version);
@@ -184,6 +185,11 @@ public class HandsetFragment extends Fragment {
 	    	mLine2.setText("rtsp://");
 	    	mLine2.append(ip);
 	    	mLine2.append(":"+mRtspServer.getPort());
+			mLine2.append("?camera=front");
+			mLine3.setText("rtsp://");
+			mLine3.append(ip);
+			mLine3.append(":"+mRtspServer.getbackPort());
+			mLine3.append("?camera=back");
 	    	streamingState(0);
     	} else if((ipaddress = Utilities.getLocalIpAddress(true)) != null) {
     		mLine1.setText(mHttpServer.isHttpsEnabled()?"https://":"http://");
@@ -192,6 +198,11 @@ public class HandsetFragment extends Fragment {
 	    	mLine2.setText("rtsp://");
 	    	mLine2.append(ipaddress);
 	    	mLine2.append(":"+mRtspServer.getPort());
+			mLine2.append("?camera=front");
+			mLine3.append("rtsp://");
+			mLine3.append(ipaddress);
+			mLine3.append(":"+mRtspServer.getbackPort());
+			mLine3.append("?camera=back");
 	    	streamingState(0);
     	} else {
     		streamingState(2);

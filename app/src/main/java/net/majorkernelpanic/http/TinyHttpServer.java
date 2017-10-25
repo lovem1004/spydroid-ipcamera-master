@@ -141,7 +141,7 @@ public class TinyHttpServer extends Service {
 	
 	protected int mHttpPort = DEFAULT_HTTP_PORT;
 	protected int mHttpsPort = DEFAULT_HTTPS_PORT;
-	protected boolean mHttpEnabled = true, mHttpsEnabled = false;
+	protected boolean mHttpEnabled = false, mHttpsEnabled = false;
 	protected LinkedList<CallbackListener> mListeners = new LinkedList<CallbackListener>();
 	
 	private BasicHttpProcessor mHttpProcessor;

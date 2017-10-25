@@ -95,7 +95,7 @@ public class CustomHttpServer extends TinyHttpServer {
 		addCallbackListener(mListener);
 
 		// HTTP is used by default for now
-		mHttpEnabled = true;
+		mHttpEnabled = false;
 		mHttpsEnabled = false;
 
 	}
