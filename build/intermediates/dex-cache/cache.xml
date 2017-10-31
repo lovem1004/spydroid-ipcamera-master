@@ -2,94 +2,148 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/scpkix-jdk15on-1.47.0.2.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/acra-4.4.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="6bed9af945c158e1e02dfbdf030179dd18e60d83">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/scpkix-jdk15on-1.47.0.2_a0c25d1c2dfdb0159c2c2133b7e8640b1f8c22fe/classes.dex" />
+        sha1="7864f0ac6c74d84e465aa5449fa14408b0a1418f">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/acra-4.4.0_00854785753d7e918c61fc4d390ef5f6bf751e9f.jar" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/acra-4.4.0.jar"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="e4b227fda51b2e0ff1c7e69d49f26fdf70e56e30">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_c30f0462e71dcf9b4754ae6cee6d736f3bc93601/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/acra-4.4.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="7864f0ac6c74d84e465aa5449fa14408b0a1418f">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/acra-4.4.0_d17123705dd777186068f6121c08781d16e6e246/classes.dex" />
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/acra-4.4.0_00854785753d7e918c61fc4d390ef5f6bf751e9f/classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/android-support-v4.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="4a6be13368bb64c5a0b0460632d228a1a915f58f">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/android-support-v4_6a421f46c4310f8a0741187a5880d17237deef19/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/sc-light-jdk15on-1.47.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="d5c98671cc97fa0d928be1c7eb5edd3fb95d3234">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/sc-light-jdk15on-1.47.0.2_659b88a3f2f02877c8e36a3107addd4815298100/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/gcm.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="a6d7bce795a14c7f86111756c4ceb44b79de14aa">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/gcm_d5cdcc3b5c080366514b6dbca46897180eb48b71/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/GoogleAdMobAdsSdk-6.1.0.jar"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/GoogleAdMobAdsSdk-6.1.0.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="0d7313ca1a34c9ce2de798006511a4b6bc26b90b">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/GoogleAdMobAdsSdk-6.1.0_04921368413b98ae26165d30f47b3c267c8e8c64/classes.dex" />
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/GoogleAdMobAdsSdk-6.1.0_a8ae864c7cd382489eaa69400378f3534839435f/classes.dex" />
     </item>
     <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/GoogleAdMobAdsSdk-6.1.0.jar"
+        jumboMode="false"
         optimize="true"
         revision="25.0.3"
-        sha1="c7e90d1946e6be178cc183e4e6345492f89c3422">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_2267b5178a58ee32f55a81754a7e05fe62005c78/classes.dex" />
+        sha1="0d7313ca1a34c9ce2de798006511a4b6bc26b90b">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/GoogleAdMobAdsSdk-6.1.0_a8ae864c7cd382489eaa69400378f3534839435f.jar" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/org.apache.http.legacy.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="5f0541a4298daa0590b22cfbde43f85e2a675545">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/org.apache.http.legacy_002542ba2722bb7d91af634189c11befe109fc6c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/libs/scprov-jdk15on-1.47.0.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.3"
-        sha1="1e2f52dbf7402b12b792282078b9f895512ae5af">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/scprov-jdk15on-1.47.0.2_59136a22d4e96a2507fb93a3882bab262b8eddea/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.3"
         sha1="3be78ebc2706b2e1fe2f12d5726887a92d6c183b">
-        <dex dex="/home/guoyuefeng/StudioProjects/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_66cce9e34ae9d17958c8c3342ddc6c107635a5a4/classes.dex" />
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_301bb18d6585768283cd3069b1227141bcbc98db/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/sc-light-jdk15on-1.47.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d5c98671cc97fa0d928be1c7eb5edd3fb95d3234">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/sc-light-jdk15on-1.47.0.2_5e9e9d7cb04a36376ba6dc2d304ec57de72862e3/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/sc-light-jdk15on-1.47.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="d5c98671cc97fa0d928be1c7eb5edd3fb95d3234">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/sc-light-jdk15on-1.47.0.2_5e9e9d7cb04a36376ba6dc2d304ec57de72862e3.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/scprov-jdk15on-1.47.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1e2f52dbf7402b12b792282078b9f895512ae5af">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/scprov-jdk15on-1.47.0.2_55cd6cce27f11cf6657ea5f38432e817b4062a1a/classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/org.apache.http.legacy.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5f0541a4298daa0590b22cfbde43f85e2a675545">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/org.apache.http.legacy_06e3ab9811e05843e814d963331e768f1f8d2b24/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/scpkix-jdk15on-1.47.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6bed9af945c158e1e02dfbdf030179dd18e60d83">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/scpkix-jdk15on-1.47.0.2_7eae2d15c8fe75dce2a1b0b1b2c83a3646e4ae9a.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/scpkix-jdk15on-1.47.0.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="6bed9af945c158e1e02dfbdf030179dd18e60d83">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/scpkix-jdk15on-1.47.0.2_7eae2d15c8fe75dce2a1b0b1b2c83a3646e4ae9a/classes.dex" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/scprov-jdk15on-1.47.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="1e2f52dbf7402b12b792282078b9f895512ae5af">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/scprov-jdk15on-1.47.0.2_55cd6cce27f11cf6657ea5f38432e817b4062a1a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/org.apache.http.legacy.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="5f0541a4298daa0590b22cfbde43f85e2a675545">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/org.apache.http.legacy_06e3ab9811e05843e814d963331e768f1f8d2b24.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/gcm.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a6d7bce795a14c7f86111756c4ceb44b79de14aa">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/pre-dexed/debug/gcm_fff853e752d085f311cd7a4662bf2a712c3b2070.jar" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="/home/dengfengwang/spydroid-ipcamera-master/app/libs/gcm.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.3"
+        sha1="a6d7bce795a14c7f86111756c4ceb44b79de14aa">
+        <dex dex="/home/dengfengwang/spydroid-ipcamera-master/app/build/intermediates/transforms/dex/debug/folders/1000/2/gcm_fff853e752d085f311cd7a4662bf2a712c3b2070/classes.dex" />
     </item>
 
 </items>
