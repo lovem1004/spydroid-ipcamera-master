@@ -55,6 +55,7 @@ import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import net.majorkernelpanic.spydroid.ui.Permission;
 
 /** 
  * Spydroid basically launches an RTSP server and an HTTP server, 
@@ -85,6 +86,8 @@ public class SpydroidActivity extends FragmentActivity {
 		mApplication = (SpydroidApplication) getApplication();
 
 		setContentView(R.layout.spydroid);
+
+		Permission.checkDrawOverlaysPermission(this);
 
 		if (findViewById(R.id.handset_pager) != null) {
 
@@ -205,6 +208,7 @@ public class SpydroidActivity extends FragmentActivity {
 		inflater.inflate(R.menu.menu, menu);
 		MenuItemCompat.setShowAsAction(menu.findItem(R.id.quit), 1);
 		MenuItemCompat.setShowAsAction(menu.findItem(R.id.options), 1);
+		MenuItemCompat.setShowAsAction(menu.findItem(R.id.turntopop), 1);
 		return true;
 	}
 
@@ -220,6 +224,9 @@ public class SpydroidActivity extends FragmentActivity {
 			return true;
 		case R.id.quit:
 			quitSpydroid();
+			return true;
+		case R.id.turntopop:
+			mRtspServer.switchToPopup();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -280,7 +287,7 @@ public class SpydroidActivity extends FragmentActivity {
 			}
 		}
 
-	};	
+	};
 
 	private ServiceConnection mHttpServiceConnection = new ServiceConnection() {
 

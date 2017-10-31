@@ -209,6 +209,7 @@ public class Session {
 
 	/** You probably don't need to use that directly, use the {@link SessionBuilder}. */
 	void removeVideoTrack() {
+
 		if (mVideoStream != null) {
 			mVideoStream.stopPreview();
 			mVideoStream = null;

@@ -47,6 +47,7 @@ public class SurfaceView extends android.view.SurfaceView implements Runnable, O
 
 	public SurfaceView(Context context, AttributeSet attrs) {
 		super(context, attrs);
+		Log.d(TAG,"SurfaceView......");
 		getHolder().addCallback(this);
 	}	
 
@@ -55,12 +56,14 @@ public class SurfaceView extends android.view.SurfaceView implements Runnable, O
 	}
 
 	public void addMediaCodecSurface(Surface surface) {
+		Log.d(TAG,"addMediaCodecSurface......");
 		synchronized (mSyncObject) {
 			mCodecSurfaceManager = new SurfaceManager(surface,mViewSurfaceManager);			
 		}
 	}
 	
 	public void removeMediaCodecSurface() {
+		Log.d(TAG,"removeMediaCodecSurface......");
 		synchronized (mSyncObject) {
 			if (mCodecSurfaceManager != null) {
 				mCodecSurfaceManager.release();
@@ -84,7 +87,7 @@ public class SurfaceView extends android.view.SurfaceView implements Runnable, O
 	
 	@Override
 	public void run() {
-
+		Log.d(TAG,"Thread run.");
 		mViewSurfaceManager = new SurfaceManager(getHolder().getSurface());
 		mViewSurfaceManager.makeCurrent();
 		mTextureManager.createTexture().setOnFrameAvailableListener(this);
@@ -128,6 +131,7 @@ public class SurfaceView extends android.view.SurfaceView implements Runnable, O
 
 	@Override
 	public void onFrameAvailable(SurfaceTexture surfaceTexture) {
+		Log.d(TAG,"onFrameAvailable....");
 		synchronized (mSyncObject) {
 			mFrameAvailable = true;
 			mSyncObject.notifyAll();	
@@ -145,6 +149,7 @@ public class SurfaceView extends android.view.SurfaceView implements Runnable, O
 
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		Log.d(TAG,"surfaceDestroyed....");
 		if (mThread != null) {
 			mThread.interrupt();
 		}

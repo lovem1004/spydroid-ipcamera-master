@@ -38,12 +38,13 @@ import java.util.regex.Pattern;
 
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
+import net.majorkernelpanic.streaming.video.PopupManager;
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.media.MediaRecorder;
 import android.os.Binder;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -102,6 +103,7 @@ public class RtspServer extends Service {
 	private final IBinder mBinder = new LocalBinder();
 	private boolean mRestart = false;
 	private final LinkedList<CallbackListener> mListeners = new LinkedList<CallbackListener>();
+	private PopupManager mPopupManager;
 	
 
 	public RtspServer() {
@@ -123,7 +125,7 @@ public class RtspServer extends Service {
 	 * @param listener The listener
 	 */
 	public void addCallbackListener(CallbackListener listener) {
-		//Log.e(TAG, "david1 addCallbackListener111");
+		Log.d(TAG, "david1 addCallbackListener111");
 		synchronized (mListeners) {
 			if (mListeners.size() > 0) {
 				for (CallbackListener cl : mListeners) {
@@ -139,7 +141,7 @@ public class RtspServer extends Service {
 	 * @param listener The listener
 	 */
 	public void removeCallbackListener(CallbackListener listener) {
-		//Log.e(TAG, "david1 removeCallbackListener222");
+		Log.d(TAG, "david1 removeCallbackListener222");
 		synchronized (mListeners) {
 			mListeners.remove(listener);				
 		}
@@ -365,7 +367,7 @@ public class RtspServer extends Service {
 	protected Session handleRequest(String uri, Socket client) throws IllegalStateException, IOException {
 		Log.e(TAG, "david123 client uri = " + uri);
 		Session session = null;
-		if (uri.indexOf("front") != -1) {
+		if (uri.indexOf("8086") != -1) {
 			Log.e(TAG, "david123 8086");
 			session = UriParser.parse(uri);
 			session.setOrigin(client.getLocalAddress().getHostAddress());
@@ -795,6 +797,34 @@ public class RtspServer extends Service {
 
 			output.write(response.getBytes());
 		}
+	}
+
+	public void switchToPopup() {
+		Log.d(TAG,"switchToPopup.......");
+		showPopup();
+		showPopup1();
+	}
+
+	public void showPopup() {
+		Log.d(TAG,"showPopup.......");
+		if (mPopupManager == null)
+			mPopupManager = new PopupManager(this);
+		mPopupManager.showPopup();
+	}
+
+	public void showPopup1() {
+		Log.d(TAG,"showPopup1.......");
+		if (mPopupManager == null)
+			mPopupManager = new PopupManager(this);
+		mPopupManager.showPopup1();
+	}
+
+	public void removePopup() {
+		Log.d(TAG,"removePopup.......");
+		if (mPopupManager != null) {
+			mPopupManager.removePopup();
+		}
+		mPopupManager = null;
 	}
 
 }

@@ -9,6 +9,7 @@
     <string name="options_activity_title">Einstellungen</string>
     <string name="warning">Schält WLAN ein und verbinde dich mit einem Netz !</string>
     <string name="streaming">Streaming !</string>
+    <string name="bitrate">0 kbps</string>
     <string name="notification_title">Spydroid</string>
     <string name="notification_content">Achtung ! Spydroid ablaufend ;)</string>
     <string name="preview">Start a stream to enable the preview !</string>

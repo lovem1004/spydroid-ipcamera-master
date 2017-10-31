@@ -6,4 +6,7 @@
     <item android:id="@+id/quit"
           android:icon="@drawable/quit"
           android:title="@string/quit" />
+    <item android:id="@+id/turntopop"
+          android:icon="@drawable/ic_popup_dim_w"
+          android:title="@string/turntopop" />
 </menu>

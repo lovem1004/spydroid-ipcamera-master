@@ -91,7 +91,7 @@ public class PreviewFragment extends Fragment {
 				if (mTextView != null) {
 					if ((mRtspServer != null && mRtspServer.isStreaming()) || (mHttpServer != null && mHttpServer.isStreaming()))
 						mTextView.setVisibility(View.INVISIBLE);
-					else 
+					else
 						mTextView.setVisibility(View.VISIBLE);
 				}
 			}

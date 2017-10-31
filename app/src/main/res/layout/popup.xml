@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<net.majorkernelpanic.spydroid.ui.PopupLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="240dp"
+    android:layout_height="135dp"
+    android:keepScreenOn="true">
+
+    <net.majorkernelpanic.streaming.gl.SurfaceView
+        android:id="@+id/player_surface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <net.majorkernelpanic.streaming.gl.SurfaceView
+        android:id="@+id/player_surface_second"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/popup_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_close_w"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/popup_expand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@id/popup_close"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/ic_popup_expand_w"
+        android:visibility="gone" />
+
+</net.majorkernelpanic.spydroid.ui.PopupLayout>

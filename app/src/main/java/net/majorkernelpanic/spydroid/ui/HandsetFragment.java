@@ -185,11 +185,9 @@ public class HandsetFragment extends Fragment {
 	    	mLine2.setText("rtsp://");
 	    	mLine2.append(ip);
 	    	mLine2.append(":"+mRtspServer.getPort());
-			mLine2.append("?camera=front");
 			mLine3.setText("rtsp://");
 			mLine3.append(ip);
 			mLine3.append(":"+mRtspServer.getbackPort());
-			mLine3.append("?camera=back");
 	    	streamingState(0);
     	} else if((ipaddress = Utilities.getLocalIpAddress(true)) != null) {
     		mLine1.setText(mHttpServer.isHttpsEnabled()?"https://":"http://");
@@ -198,11 +196,9 @@ public class HandsetFragment extends Fragment {
 	    	mLine2.setText("rtsp://");
 	    	mLine2.append(ipaddress);
 	    	mLine2.append(":"+mRtspServer.getPort());
-			mLine2.append("?camera=front");
 			mLine3.append("rtsp://");
 			mLine3.append(ipaddress);
 			mLine3.append(":"+mRtspServer.getbackPort());
-			mLine3.append("?camera=back");
 	    	streamingState(0);
     	} else {
     		streamingState(2);

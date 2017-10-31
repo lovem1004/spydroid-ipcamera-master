@@ -20,6 +20,9 @@
 
 package net.majorkernelpanic.streaming.video;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -35,6 +38,7 @@ import net.majorkernelpanic.streaming.gl.SurfaceView;
 import net.majorkernelpanic.streaming.hw.EncoderDebugger;
 import net.majorkernelpanic.streaming.hw.NV21Convertor;
 import net.majorkernelpanic.streaming.rtp.MediaCodecInputStream;
+
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -79,7 +83,7 @@ public abstract class VideoStream extends MediaStream {
 	protected String mEncoderName;
 	protected int mEncoderColorFormat;
 	protected int mCameraImageFormat;
-	protected int mMaxFps = 0;	
+	protected int mMaxFps = 0;
 
 	/** 
 	 * Don't use this class directly.
@@ -270,6 +274,7 @@ public abstract class VideoStream extends MediaStream {
 
 	/** Stops the stream. */
 	public synchronized void stop() {
+		Log.d(TAG,"stop........");
 		if (mCamera != null) {
 			if (mMode == MODE_MEDIACODEC_API) {
 				mCamera.setPreviewCallbackWithBuffer(null);
@@ -296,7 +301,7 @@ public abstract class VideoStream extends MediaStream {
 			InvalidSurfaceException, 
 			ConfNotSupportedException, 
 			RuntimeException {
-		
+		Log.d(TAG,"startPreview........" + mPreviewStarted);
 		mCameraOpenedManually = true;
 		if (!mPreviewStarted) {
 			createCamera();
@@ -315,6 +320,7 @@ public abstract class VideoStream extends MediaStream {
 	 * Stops the preview.
 	 */
 	public synchronized void stopPreview() {
+		Log.d(TAG,"stopPreview........");
 		mCameraOpenedManually = false;
 		stop();
 	}
@@ -436,7 +442,7 @@ public abstract class VideoStream extends MediaStream {
 		mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, mQuality.framerate);	
 		mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,debugger.getEncoderColorFormat());
 		mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
-		mediaFormat.setInteger(MediaFormat.KEY_ROTATION, mOrientation);//数据旋转方向
+		mediaFormat.setInteger(MediaFormat.KEY_ROTATION, 90);//数据旋转方向
 		mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
 		mMediaCodec.start();
 
@@ -449,17 +455,19 @@ public abstract class VideoStream extends MediaStream {
 				now = System.nanoTime()/1000;
 				if (i++>3) {
 					i = 0;
-					//Log.d(TAG,"Measured: "+1000000L/(now-oldnow)+" fps.");
+					Log.d(TAG,"Measured: "+1000000L/(now-oldnow)+" fps.");
 				}
+
 				try {
 					int bufferIndex = mMediaCodec.dequeueInputBuffer(1000000);
 					if (bufferIndex>=0) {
 						inputBuffers[bufferIndex].clear();
-						//Log.e(TAG, "david data[0] = [" + data[0] + "]");
 						convertor.convert(data, inputBuffers[bufferIndex]);
-						//Log.e(TAG, "===========================inputBuffers[" + bufferIndex + "] = [" + inputBuffers[bufferIndex] + "]");
-						mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
-						//Log.e(TAG, "----------------------------------------------inputBuffers[" + bufferIndex + "] = [" + inputBuffers[bufferIndex] + "]");
+						try {
+							mMediaCodec.queueInputBuffer(bufferIndex, 0, inputBuffers[bufferIndex].position(), now, 0);
+						}catch (RuntimeException e) {
+							e.printStackTrace();
+						}
 					} else {
 						Log.e(TAG,"No buffer available !");
 					}
@@ -533,6 +541,7 @@ public abstract class VideoStream extends MediaStream {
 	 * @throws RuntimeException Might happen if another app is already using the camera.
 	 */
 	private void openCamera() throws RuntimeException {
+		Log.d(TAG,"openCamera.....");
 		final Semaphore lock = new Semaphore(0);
 		final RuntimeException[] exception = new RuntimeException[1];
 		mCameraThread = new Thread(new Runnable() {
@@ -556,6 +565,7 @@ public abstract class VideoStream extends MediaStream {
 	}
 
 	protected synchronized void createCamera() throws RuntimeException {
+		Log.d(TAG,"createCamera.......");
 		if (mSurfaceView == null)
 			throw new InvalidSurfaceException("Invalid surface !");
 		if (mSurfaceView.getHolder() == null || !mSurfaceReady) 
@@ -590,6 +600,7 @@ public abstract class VideoStream extends MediaStream {
 					parameters.setFlashMode(mFlashEnabled?Parameters.FLASH_MODE_TORCH:Parameters.FLASH_MODE_OFF);
 				}
 				parameters.setRecordingHint(true);
+				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
 				mCamera.setParameters(parameters);
 				mCamera.setDisplayOrientation(mOrientation);
 
@@ -720,5 +731,4 @@ public abstract class VideoStream extends MediaStream {
 		mCamera.setPreviewCallback(null);
 
 	}
-
 }

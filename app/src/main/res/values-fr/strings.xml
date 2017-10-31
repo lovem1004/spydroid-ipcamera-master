@@ -10,6 +10,7 @@
     <string name="options_activity_title">Réglages</string>
     <string name="warning">Active le wifi ou la fonction hotspot !</string>
     <string name="streaming">Streaming !</string>
+    <string name="bitrate">0 kbps</string>
     <string name="notification_title">Spydroid</string>
     <string name="notification_content">Attention ! Spydroid est lancé ;)</string>
     <string name="preview">Lance un stream pour voir l\'aperçu !</string>

@@ -9,6 +9,7 @@
     <string name="options_activity_title">Настройки</string>
     <string name="warning">Включите wifi и подключитесь к сети !</string>
     <string name="streaming">Трансляция !</string>
+    <string name="bitrate">0 kbps</string>
     <string name="preview">Start a stream to enable the preview !</string>
     <string name="notification_title">Spydroid</string>
     <string name="notification_content">Берегись ! Spydroid работает ;)</string>
