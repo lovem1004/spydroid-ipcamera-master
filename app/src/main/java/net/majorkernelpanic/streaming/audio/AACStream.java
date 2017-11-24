@@ -146,15 +146,17 @@ public class AACStream extends AudioStream {
 
 		if (mMode != mRequestedMode || mPacketizer==null) {
 			mMode = mRequestedMode;
-			if (mMode == MODE_MEDIARECORDER_API) {
+			if (mMode != MODE_MEDIARECORDER_API) {
+				Log.e(TAG, "new AACADTSPacketizer");
 				mPacketizer = new AACADTSPacketizer();
-			} else { 
+			} else {
+				Log.e(TAG, "new AACLATMPacketizer");
 				mPacketizer = new AACLATMPacketizer();
 			}		
 		}
 		
 
-		if (mMode == MODE_MEDIARECORDER_API) {
+		if (mMode != MODE_MEDIARECORDER_API) {
 
 			testADTS();
 
@@ -183,7 +185,7 @@ public class AACStream extends AudioStream {
 	}
 
 	@Override
-	protected void encodeWithMediaRecorder() throws IOException {
+	protected void encodeWithMediaCodec() throws IOException {
 		testADTS();
 		((AACADTSPacketizer)mPacketizer).setSamplingRate(mQuality.samplingRate);
 		super.encodeWithMediaRecorder();
@@ -191,7 +193,7 @@ public class AACStream extends AudioStream {
 
 	@Override
 	@SuppressLint({ "InlinedApi", "NewApi" })
-	protected void encodeWithMediaCodec() throws IOException {
+	protected void encodeWithMediaRecorder() throws IOException {
 
 		final int bufferSize = AudioRecord.getMinBufferSize(mQuality.samplingRate, AudioFormat.CHANNEL_IN_MONO, AudioFormat.ENCODING_PCM_16BIT)*2;
 
@@ -251,12 +253,16 @@ public class AACStream extends AudioStream {
 	/** Stops the stream. */
 	public synchronized void stop() {
 		if (mStreaming) {
-			if (mMode==MODE_MEDIACODEC_API) {
-				Log.d(TAG, "Interrupting threads...");
-				mThread.interrupt();
-				mAudioRecord.stop();
-				mAudioRecord.release();
-				mAudioRecord = null;
+			try {
+			    if (mMode==MODE_MEDIACODEC_API) {
+					Log.d(TAG, "Interrupting threads...");
+					mThread.interrupt();
+					mAudioRecord.stop();
+					mAudioRecord.release();
+					mAudioRecord = null;
+			    }
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
 			super.stop();
 		}

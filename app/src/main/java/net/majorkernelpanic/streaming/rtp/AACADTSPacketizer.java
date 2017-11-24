@@ -30,6 +30,7 @@ import net.majorkernelpanic.streaming.audio.AACStream;
 import android.os.Environment;
 import android.os.SystemClock;
 import android.util.Log;
+import android.text.format.Time;
 
 /**
  *   
@@ -44,17 +45,23 @@ import android.util.Log;
 public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 
 	private final static String TAG = "AACADTSPacketizer";
-	private static String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/testAudioAdts.aac";
+	private String path;
 	private BufferedOutputStream outputStream;
 
 	private Thread t;
 	private int samplingRate = 8000;
 
+	public static String oldPath = null;
+	public static BufferedOutputStream oldOutputStream = null;
+	public static boolean willCreateNewFile = false;
+
 	public AACADTSPacketizer() {
 		super();
+		Log.e(TAG, "guoyuefeng1123 AACADTSPacketizer()");
 	}
 
 	public void start() {
+		Log.e(TAG, "guoyuefeng1123 start()");
 		createfile();
 		if (t==null) {
 			t = new Thread(this);
@@ -101,14 +108,28 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		long oldtime = SystemClock.elapsedRealtime(), now = oldtime;
 		byte[] header = new byte[8]; 
 
+		long oldtime1 = 0;
 		try {
 			while (!Thread.interrupted()) {
-
+				if (willCreateNewFile) {
+					oldPath = path;
+					oldOutputStream = outputStream;
+					createfile();
+					if (oldOutputStream != null) {
+						oldOutputStream.flush();
+						oldOutputStream.close();
+					}
+					willCreateNewFile = false;
+				}
 				// Synchronisation: ADTS packet starts with 12bits set to 1
+				header[0] = (byte)0xFF;
 				while (true) {
 					if ( (is.read()&0xFF) == 0xFF ) {
 						header[1] = (byte) is.read();
-						if ( (header[1]&0xF0) == 0xF0) break;
+						if ( (header[1]&0xF0) == 0xF0) {
+							outputStream.write(header, 0, 2);
+							break;
+						}
 					}
 				}
 
@@ -203,7 +224,18 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 	}
 
 	private void createfile(){
-		//Log.e(TAG, "david path = [" + path + "]");
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month +1;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		Log.i(TAG, ""+year+month+day+hour+minute+second);
+		String filename=""+year+month+day+hour+minute+second;
+		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".aac";
+		Log.e(TAG, "guoyuefeng1123 aac createfile() path = [" + path + "]");
 		File file = new File(path);
 		if(file.exists()){
 			file.delete();
@@ -214,5 +246,4 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 			e.printStackTrace();
 		}
 	}
-
 }
