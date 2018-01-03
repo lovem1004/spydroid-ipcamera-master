@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/options"
-          android:icon="@drawable/settings"
-          android:title="@string/options" />
-    <item android:id="@+id/quit"
-          android:icon="@drawable/quit"
-          android:title="@string/quit" />
     <item android:id="@+id/turntopop"
           android:icon="@drawable/ic_popup_dim_w"
           android:title="@string/turntopop" />
+    <item android:id="@+id/save"
+        android:icon="@drawable/ic_save"
+        android:title="@string/save" />
+    <item android:id="@+id/quit"
+        android:icon="@drawable/quit"
+        android:title="@string/quit" />
 </menu>

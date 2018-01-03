@@ -326,9 +326,10 @@ public class SpydroidActivity extends FragmentActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.menu, menu);
-		MenuItemCompat.setShowAsAction(menu.findItem(R.id.quit), 1);
-		MenuItemCompat.setShowAsAction(menu.findItem(R.id.options), 1);
+		//MenuItemCompat.setShowAsAction(menu.findItem(R.id.options), 1);
 		MenuItemCompat.setShowAsAction(menu.findItem(R.id.turntopop), 1);
+		MenuItemCompat.setShowAsAction(menu.findItem(R.id.save), 1);
+		MenuItemCompat.setShowAsAction(menu.findItem(R.id.quit), 1);
 		return true;
 	}
 
@@ -337,16 +338,19 @@ public class SpydroidActivity extends FragmentActivity {
 		Intent intent;
 
 		switch (item.getItemId()) {
-		case R.id.options:
+		//case R.id.options:
 			// Starts QualityListActivity where user can change the streaming quality
-			intent = new Intent(this.getBaseContext(),OptionsActivity.class);
-			startActivityForResult(intent, 0);
+			//intent = new Intent(this.getBaseContext(),OptionsActivity.class);
+			//startActivityForResult(intent, 0);
+			//return true;
+		case R.id.turntopop:
+			mRtspServer.switchToPopup();
+			return true;
+		case R.id.save:
+			mApplication.mSave = true;
 			return true;
 		case R.id.quit:
 			quitSpydroid();
-			return true;
-		case R.id.turntopop:
-			mRtspServer.switchToPopup();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -480,12 +484,12 @@ public class SpydroidActivity extends FragmentActivity {
 				switch (i) {
 				case 0: return new HandsetFragment();
 				case 1: return new PreviewFragment();
-				case 2: return new AboutFragment();
+				//case 2: return new AboutFragment();
 				}
 			} else {
 				switch (i) {
 				case 0: return new TabletFragment();
-				case 1: return new AboutFragment();
+				//case 1: return new AboutFragment();
 				}        		
 			}
 			return null;
@@ -493,7 +497,7 @@ public class SpydroidActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			return device==HANDSET ? 3 : 2;
+			return device==HANDSET ? 2 : 1;
 		}
 
 		public HandsetFragment getHandsetFragment() {
@@ -518,12 +522,12 @@ public class SpydroidActivity extends FragmentActivity {
 				switch (position) {
 				case 0: return getString(R.string.page0);
 				case 1: return getString(R.string.page1);
-				case 2: return getString(R.string.page2);
+				//case 2: return getString(R.string.page2);
 				}        		
 			} else {
 				switch (position) {
 				case 0: return getString(R.string.page0);
-				case 1: return getString(R.string.page2);
+				//case 1: return getString(R.string.page2);
 				}
 			}
 			return null;
