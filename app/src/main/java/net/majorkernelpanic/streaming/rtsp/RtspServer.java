@@ -125,7 +125,7 @@ public class RtspServer extends Service {
 	 * @param listener The listener
 	 */
 	public void addCallbackListener(CallbackListener listener) {
-		Log.d(TAG, "david1 addCallbackListener111");
+		//Log.d(TAG, "david1 addCallbackListener111");
 		synchronized (mListeners) {
 			if (mListeners.size() > 0) {
 				for (CallbackListener cl : mListeners) {
@@ -141,7 +141,7 @@ public class RtspServer extends Service {
 	 * @param listener The listener
 	 */
 	public void removeCallbackListener(CallbackListener listener) {
-		Log.d(TAG, "david1 removeCallbackListener222");
+		//Log.d(TAG, "david1 removeCallbackListener222");
 		synchronized (mListeners) {
 			mListeners.remove(listener);				
 		}
@@ -365,17 +365,17 @@ public class RtspServer extends Service {
 	 * @return A proper session
 	 */
 	protected Session handleRequest(String uri, Socket client) throws IllegalStateException, IOException {
-		Log.e(TAG, "david123 client uri = " + uri);
+		//Log.e(TAG, "david123 client uri = " + uri);
 		Session session = null;
 		if (uri.indexOf("8086") != -1) {
-			Log.e(TAG, "david123 8086");
+			//Log.e(TAG, "david123 8086");
 			session = UriParser.parse(uri);
 			session.setOrigin(client.getLocalAddress().getHostAddress());
 			if (session.getDestination()==null) {
 				session.setDestination(client.getInetAddress().getHostAddress());
 			}
 		} else {
-			Log.e(TAG, "david123 6086");
+			//Log.e(TAG, "david123 6086");
 			session = UriParser.parse_back(uri);
 			session.setOrigin(client.getLocalAddress().getHostAddress());
 			if (session.getDestination() == null) {
@@ -391,7 +391,7 @@ public class RtspServer extends Service {
 		private final ServerSocket mServer;
 
 		public RequestListener() throws IOException {
-			Log.e(TAG, "david123 RequestListener");
+			//Log.e(TAG, "david123 RequestListener");
 			try {
 				mServer = new ServerSocket(mPort);
 				start();
@@ -403,11 +403,8 @@ public class RtspServer extends Service {
 		}
 
 		public void run() {
-			Log.i(TAG,"david123 RTSP server listening on port "+mServer.getLocalPort());
-			//Log.e(TAG, "david1 testDavid = " + testDavid);
 			while (!Thread.interrupted()) {
 				try {
-					Log.e(TAG, "david123 new WorkerThread to start");
 					new WorkerThread(mServer.accept()).start();
 				} catch (SocketException e) {
 					break;
@@ -435,7 +432,7 @@ public class RtspServer extends Service {
 		private final ServerSocket mServer;
 
 		public RequestListener_back() throws IOException {
-			Log.e(TAG, "david123 RequestListener_back");
+			//Log.e(TAG, "david123 RequestListener_back");
 			try {
 				mServer = new ServerSocket(mPort_back);
 				start();
@@ -447,11 +444,8 @@ public class RtspServer extends Service {
 		}
 
 		public void run() {
-			Log.i(TAG,"david123 RTSP server listening on port "+mServer.getLocalPort());
-			//Log.e(TAG, "david1 testDavid = " + testDavid);
 			while (!Thread.interrupted()) {
 				try {
-					Log.e(TAG, "david123 new WorkerThread to start");
 					new WorkerThread(mServer.accept()).start();
 				} catch (SocketException e) {
 					break;
@@ -561,17 +555,15 @@ public class RtspServer extends Service {
 		}
 
 		public Response processRequest(Request request) throws IllegalStateException, IOException {
-			Log.e(TAG, "david123 processRequest");
+			//Log.e(TAG, "david123 processRequest");
 			Response response = new Response(request);
 
 			/* ********************************************************************************** */
 			/* ********************************* Method DESCRIBE ******************************** */
 			/* ********************************************************************************** */
 			if (request.method.equalsIgnoreCase("DESCRIBE")) {
-				Log.e(TAG, "david123 DESCRIBE");
 				// Parse the requested URI and configure the session
 				mSession = handleRequest(request.uri, mClient);
-				Log.e(TAG, "david123 after handleRequest mSession.getCamera = " + mSession.getCamera());
 				mSessions.put(mSession, null);
 				mSession.syncConfigure();
 				
@@ -579,9 +571,6 @@ public class RtspServer extends Service {
 				String requestAttributes = 
 						"Content-Base: "+mClient.getLocalAddress().getHostAddress()+":"+mClient.getLocalPort()+"/\r\n" +
 								"Content-Type: application/sdp\r\n";
-
-				Log.e(TAG, "david123 requestAttributes = " + requestAttributes);
-				Log.e(TAG, "david123 requestContent = " + requestContent);
 
 				response.attributes = requestAttributes;
 				response.content = requestContent;
@@ -595,7 +584,6 @@ public class RtspServer extends Service {
 			/* ********************************* Method OPTIONS ********************************* */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("OPTIONS")) {
-				Log.e(TAG, "david123 OPTIONS");
 				response.status = Response.STATUS_OK;
 				response.attributes = "Public: DESCRIBE,SETUP,TEARDOWN,PLAY,PAUSE\r\n";
 				response.status = Response.STATUS_OK;
@@ -605,7 +593,6 @@ public class RtspServer extends Service {
 			/* ********************************** Method SETUP ********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("SETUP")) {
-				Log.e(TAG, "david123 SETUP");
 				Pattern p; Matcher m;
 				int p2, p1, ssrc, trackId, src[];
 				String destination;
@@ -669,7 +656,6 @@ public class RtspServer extends Service {
 			/* ********************************** Method PLAY *********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("PLAY")) {
-				Log.e(TAG, "david123 PLAY");
 				String requestAttributes = "RTP-Info: ";
 				if (mSession.trackExists(0)) requestAttributes += "url=rtsp://"+mClient.getLocalAddress().getHostAddress()+":"+mClient.getLocalPort()+"/trackID="+0+";seq=0,";
 				if (mSession.trackExists(1)) requestAttributes += "url=rtsp://"+mClient.getLocalAddress().getHostAddress()+":"+mClient.getLocalPort()+"/trackID="+1+";seq=0,";
@@ -686,7 +672,6 @@ public class RtspServer extends Service {
 			/* ********************************** Method PAUSE ********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("PAUSE")) {
-				Log.e(TAG, "david123 PAUSE");
 				response.status = Response.STATUS_OK;
 			}
 
@@ -694,7 +679,6 @@ public class RtspServer extends Service {
 			/* ********************************* Method TEARDOWN ******************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("TEARDOWN")) {
-				Log.e(TAG, "david123 TEARDOWN");
 				response.status = Response.STATUS_OK;
 			}
 

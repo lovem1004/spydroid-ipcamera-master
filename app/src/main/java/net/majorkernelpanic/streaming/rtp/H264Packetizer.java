@@ -30,8 +30,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
@@ -41,6 +42,7 @@ import android.text.format.Time;
 import android.util.Log;
 
 import net.majorkernelpanic.jni.FFmpegJni;
+import net.majorkernelpanic.spydroid.ui.SpydroidActivity;
 
 import static android.R.attr.path;
 
@@ -73,7 +75,12 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	private BufferedOutputStream oldOutputStream;
 	private static int channel = 0;
 	private int videoChannel = -1;
-	private boolean isThreadFfmpegBegin = false;
+	private static boolean isThreadFfmpegBegin = false;
+    private static int timeCount = 0;
+	private static String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+
+	private static int count1 = 0;
+	private static int count2 = 0;
 
 	private boolean willCreateNewFile = false;
 	public static final int SIZETYPE_B = 1;//获取文件大小单位为B的double值
@@ -82,18 +89,15 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	public static final int SIZETYPE_GB = 4;//获取文件大小单位为GB的double值
 
 	//private ArrayList<Map<String, String>> pathMaps = new ArrayList<Map<String, String>>();
-	private ArrayList<String[]> pathMaps = new ArrayList<String[]>();
+	private static ArrayList<String[]> pathMaps = new ArrayList<String[]>();
 
 	public H264Packetizer() {
 		super();
 		socket.setClockFrequency(90000);
 		channel++;
-		Log.e(TAG, "david1123 channel = " + channel);
 		if (1 == channel) {
-			Log.e(TAG, "david1123 1 == channel");
 			videoChannel = 1;
 		} else if (2 == channel) {
-			Log.e(TAG, "david1123 2 == channel");
 			videoChannel = 2;
 		}
 	}
@@ -108,6 +112,13 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	public void stop() throws IOException {
+		Log.e(TAG, "david1215 stop videoChannel = " + videoChannel);
+		if (!isThreadFfmpegBegin) {
+			Log.e(TAG, "david0102 call 22222");
+			getMp4FromFfmpeg();
+			isThreadFfmpegBegin = true;
+		}
+
 		if (outputStream != null) {
 			outputStream.flush();
 			outputStream.close();
@@ -146,6 +157,10 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			socket.setCacheSize(400);
 		}
 
+		if (2 == videoChannel) {
+			AACADTSPacketizer.isChannelSecond = true;
+			AACADTSPacketizer.isCreateNewFileSecond = true;
+		}
 		try {
 			while (!Thread.interrupted()) {
 				if (1 == videoChannel) {
@@ -175,7 +190,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 						socket.markNextPacket();
 						socket.updateTimestamp(ts);
 						System.arraycopy(sps, 0, buffer, rtphl, sps.length);
-						//Log.e(TAG, "david sps = [" + sps + "]");
+						//Log.e(TAG, "sps = [" + sps + "]");
 						super.send(rtphl+sps.length);
 					}
 					if (pps != null) {
@@ -296,23 +311,143 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		}
 	}
 
+	public ArrayList<String> traverseFolder(String path) {
+		ArrayList<String> fileNames = new ArrayList<String>();
+		File file = new File(path);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains(".h264") || file2.toString().contains(".aac")) {
+						fileNames.add(file2.toString());
+					}
+				}
+			}
+		}
+		return fileNames;
+	}
+
+	public static int getNumbers(String content) {
+		Pattern pattern = Pattern.compile("\\d+");
+		Matcher matcher = pattern.matcher(content);
+		while (matcher.find()) {
+			return Integer.parseInt(matcher.group(0));
+		}
+		return -1;
+	}
+
+	public static int getNumbers1(String str) {
+		char[] chr2 = new char[20];
+		str.getChars(20,str.length(),chr2,0);
+		String str_result = new String(chr2);
+		return getNumbers(str_result);
+	}
+
+	public void sort_list(ArrayList<String> list) {
+		Collections.sort(list, new Comparator<Object>() {
+			@Override
+			public int compare(Object o1, Object o2) {
+				char[] chr1 = new char[20];
+				((String)o1).getChars(20,((String)o1).length(),chr1,0);
+				String str1 = new String(chr1);
+				//Log.e(TAG, "str1 = [" + str1 + "]");
+
+				char[] chr2 = new char[20];
+				((String)o2).getChars(20,((String)o2).length(),chr2,0);
+				String str2 = new String(chr2);
+				//Log.e(TAG, "str2 = [" + str2 + "]");
+
+				int s1 = getNumbers(str1);
+				int s2 = getNumbers(str2);
+				if(s1 >= s2) {
+					return 1;
+				}
+				else {
+					return -1;
+				}
+			}
+		});
+	}
+
+	public void traverseFolder1(String dir, ArrayList<String> h264FileNames, ArrayList<String> aacFileNames, ArrayList<String> h264FileNames_second, ArrayList<String> aacFileNames_second) {
+		File file = new File(dir);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains("second.h264")) {
+						//Log.e(TAG, "second.h264 : " + file2.toString());
+						h264FileNames_second.add(file2.toString());
+					} else if (file2.toString().contains("second.aac")) {
+						//Log.e(TAG, "second.aac : " + file2.toString());
+						aacFileNames_second.add(file2.toString());
+					} else if (file2.toString().contains(".h264")) {
+						//Log.e(TAG, ".h264 : " + file2.toString());
+						h264FileNames.add(file2.toString());
+					} else if (file2.toString().contains(".aac")) {
+						//Log.e(TAG, ".aac : " + file2.toString());
+						aacFileNames.add(file2.toString());
+					}
+				}
+			}
+
+			sort_list(h264FileNames);
+			sort_list(aacFileNames);
+			sort_list(h264FileNames_second);
+			sort_list(aacFileNames_second);
+		}
+	}
+
 	public void getMp4FromFfmpeg() {
 		new Thread(new Runnable() {
 			String aacPath;
 			String h264Path;
+            ArrayList<String> h264FileNames = new ArrayList<String>();
+			ArrayList<String> aacFileNames = new ArrayList<String>();
+			ArrayList<String> h264FileNames_second = new ArrayList<String>();
+			ArrayList<String> aacFileNames_second = new ArrayList<String>();
+			String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
 			String[] commands = new String[10];
+
 			@Override
 			public void run() {
+				ArrayList<String[]> pathCollect = new ArrayList<String[]>();
+
 				while (true) {
+					Log.e(TAG, "david1215 run in while loop");
+					if (!pathMaps.isEmpty()) {
+						pathCollect = (ArrayList<String[]>) pathMaps.clone();
+					}
+
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					if (pathMaps.isEmpty())
-						continue;
+					if (pathCollect.isEmpty()) {
+						Log.e(TAG, "david1215 timeCount = " + timeCount);
+                        if (timeCount > 30) { //5 minutes
+                            break;
+                        }
+                        try {
+                            Thread.sleep(10000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        timeCount++;
+                        continue;
+                    } else {
+						Log.e(TAG, "david1215 timeCount will set to 0");
+                        timeCount = 0;
+                    }
 
-					String[] paths = pathMaps.get(0);
+					String[] paths = pathCollect.get(0);
 					aacPath = paths[0];
 					h264Path = paths[1];
 
@@ -329,17 +464,114 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 					int result = FFmpegJni.run(commands);
 
 					File fileH264 = new File(h264Path);
-					Log.e(TAG, "david1124 old fileH264 = " + h264Path);
-
 					if (fileH264.exists()) {
+						Log.e(TAG, "delete h264 file: " + h264Path);
 						fileH264.delete();
 					}
+
 					File fileAac = new File(aacPath);
-					Log.e(TAG, "david1124 old fileAac = " + aacPath);
 					if (fileAac.exists()) {
+						Log.e(TAG, "david1218 delete aac file: " + aacPath);
 						fileAac.delete();
 					}
+
 					pathMaps.remove(0);
+					pathCollect.remove(0);
+				}
+
+				Log.e(TAG, "david1215 run outof while loop");
+
+				h264FileNames.clear();
+				aacFileNames.clear();
+				h264FileNames_second.clear();
+				aacFileNames_second.clear();
+				traverseFolder1(dir, h264FileNames, aacFileNames, h264FileNames_second, aacFileNames_second);
+
+				 if (!h264FileNames.isEmpty()) {
+					 for (int i = 0; i < h264FileNames.size(); i++) {
+						 boolean hasMatchAacFile = false;
+						 String h264Name = h264FileNames.get(i);
+						 if (i >= aacFileNames.size())
+						 	break;
+						 String aacName = aacFileNames.get(i);
+
+						 if (getNumbers1(h264Name) != getNumbers1(aacName)) {
+							 for (int j=0; j<aacFileNames.size(); j++) {
+								 aacName = aacFileNames.get(j);
+								 if (getNumbers1(h264Name) == getNumbers1(aacName)) {
+									 hasMatchAacFile = true;
+									 break;
+								 }
+							 }
+						 } else {
+							 hasMatchAacFile = true;
+						 }
+
+						 if (!hasMatchAacFile)
+							 continue;
+
+						 commands[0] = "ffmpeg";
+						 commands[1] = "-i";
+						 commands[2] = aacName;
+						 commands[3] = "-i";
+						 commands[4] = h264Name;
+						 commands[5] = "-map";
+						 commands[6] = "0:0";
+						 commands[7] = "-map";
+						 commands[8] = "1:0";
+						 commands[9] = getOutputFileName();
+						 int result = FFmpegJni.run(commands);
+						 try {
+							 //Log.e(TAG, "will delete the aac file and h264 file");
+							 Runtime.getRuntime().exec("rm " + h264Name + " " + aacName);
+						 } catch (IOException e) {
+							 e.printStackTrace();
+						 }
+					 }
+				 }
+
+				if (!h264FileNames_second.isEmpty()) {
+					for (int i = 0; i < h264FileNames_second.size(); i++) {
+						boolean hasMatchAacFile_second = false;
+						String h264Name_second = h264FileNames_second.get(i);
+						if (i >= aacFileNames_second.size())
+							break;
+						String aacName_second = aacFileNames_second.get(i);
+
+						if (getNumbers1(h264Name_second) != getNumbers1(aacName_second)) {
+							for (int j=0; j<aacFileNames.size(); j++) {
+								aacName_second = aacFileNames.get(j);
+								if (getNumbers1(h264Name_second) == getNumbers1(aacName_second)) {
+									hasMatchAacFile_second = true;
+									break;
+								}
+							}
+						} else {
+							hasMatchAacFile_second = true;
+						}
+
+						if (!hasMatchAacFile_second)
+							continue;
+
+						Log.e(TAG, "ruirui second h264FileNames[" + i + "]" + "= [" + h264Name_second + "]");
+						commands[0] = "ffmpeg";
+						commands[1] = "-i";
+						commands[2] = aacName_second;
+						commands[3] = "-i";
+						commands[4] = h264Name_second;
+						commands[5] = "-map";
+						commands[6] = "0:0";
+						commands[7] = "-map";
+						commands[8] = "1:0";
+						commands[9] = getOutputFileName_second();
+						int result = FFmpegJni.run(commands);
+						try {
+							//Log.e(TAG, "will delete the aac file and h264 file");
+							Runtime.getRuntime().exec("rm " + h264Name_second + " " + aacName_second);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
 				}
 			}
 		}).start();
@@ -352,20 +584,18 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			if (len<0) {
 				throw new IOException("End of stream");
 			} else {
-				if ((1 == videoChannel) && willCreateNewFile) {
-					//Log.e(TAG, "guoyuefeng1121 buffer[4] = [" + buffer[4] + "]");
+				if (willCreateNewFile) {
 					if (5 == length) {
 						if((int)buffer[4] == 101) {
+							if (1 == videoChannel) {
 								AACADTSPacketizer.willCreateNewFile = true;
 								oldtime1 = 0;
 								oldPath = path;
 								oldOutputStream = outputStream;
-								Log.e(TAG, "guoyuefeng1122 oldPath = " + oldPath);
 								new Thread(new Runnable() {
 									@Override
 									public void run() {
 										while (true) {
-											Log.e(TAG, "guoyuefeng1124 new Thread");
 											if ((AACADTSPacketizer.oldPath != null) && (oldPath != null)) {
 												if (oldOutputStream != null) {
 													try {
@@ -405,6 +635,50 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 										}
 									}
 								}).start();
+							} else if (2 == videoChannel) {
+								AACADTSPacketizer.willCreateNewFileSecond = true;
+								oldtime1 = 0;
+								oldPath = path;
+								oldOutputStream = outputStream;
+								Log.e(TAG, "oldPath = " + oldPath);
+								new Thread(new Runnable() {
+									@Override
+									public void run() {
+										while (true) {
+											if ((AACADTSPacketizer.oldPathSecond != null) && (oldPath != null)) {
+												if (oldOutputStream != null) {
+													try {
+														oldOutputStream.flush();
+														oldOutputStream.close();
+													} catch (IOException e) {
+														e.printStackTrace();
+													}
+												}
+
+												if (AACADTSPacketizer.oldOutputStreamSecond != null) {
+													try {
+														AACADTSPacketizer.oldOutputStreamSecond.flush();
+														AACADTSPacketizer.oldOutputStreamSecond.close();
+													} catch (IOException e) {
+														e.printStackTrace();
+													}
+												}
+
+												String[] name = new String[2];
+												name[0] = new String(AACADTSPacketizer.oldPathSecond);
+												name[1] = new String(oldPath);
+												pathMaps.add(name);
+
+												oldOutputStream = null;
+												oldPath = null;
+												AACADTSPacketizer.oldOutputStreamSecond = null;
+												AACADTSPacketizer.oldPathSecond = null;
+												break;
+											}
+										}
+									}
+								}).start();
+							}
 							createfile();
 							if (sps != null) {
 								byte[] buf = new byte[sps.length+4];
@@ -413,7 +687,6 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 								buf[2] = 0x00;
 								buf[3] = 0x01;
 								System.arraycopy(sps, 0, buf, 4, sps.length);
-								//Log.e(TAG, "david sps = [" + sps + "]");
 								outputStream.write(buf, 0, sps.length+4);
 							}
 							if (pps != null) {
@@ -474,7 +747,6 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	private void createfile(){
-		//Log.e(TAG, "david path = [" + path + "]");
 		Time t=new Time();
 		t.setToNow();
 		int year=t.year;
@@ -484,11 +756,16 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		int minute=t.minute;
 		int second=t.second;
 		Log.i(TAG, ""+year+month+day+hour+minute+second);
-		String filename=""+year+month+day+hour+minute+second;
+		//String filename=""+year+month+day+hour+minute+second;
+		String filename;
 		if (2 == videoChannel) {
-			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second" +  ".h264";
+			filename = "SPY_" + count2;
+			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.h264";
+			count2++;
 		} else {
+			filename = "SPY_" + count1;
 			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
+			count1++;
 		}
 		File file = new File(path);
 		if(file.exists()){
@@ -510,9 +787,24 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		int hour=t.hour;
 		int minute=t.minute;
 		int second=t.second;
-		//Log.i(TAG, ""+year+month+day+hour+minute+second);
-		String filename=""+year+month+day+hour+minute+second;
+		//Log.i(TAG, "SPY_"+year+month+day+hour+minute+second);
+		String filename="SPY_"+year+month+day+hour+minute+second;
 		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".mp4";
+		return outputName;
+	}
+
+	private String getOutputFileName_second(){
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month +1;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		//Log.i(TAG, ""+year+month+day+hour+minute+second);
+		String filename="SPY_"+year+month+day+hour+minute+second;
+		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.mp4";
 		return outputName;
 	}
 
@@ -622,13 +914,14 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				}
 			}
 		}
-		files[0].delete();
+		if (files.length > 0)
+			files[0].delete();
 	}
 
 	public FileFilter fileFilter = new FileFilter() {
 		public boolean accept(File file) {
 			String tmp = file.getName().toLowerCase();
-			if (tmp.endsWith(".h264")) {
+			if (tmp.endsWith(".mp4")) {
 				return true;
 			}
 			return false;

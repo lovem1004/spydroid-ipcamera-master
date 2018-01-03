@@ -39,6 +39,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.support.v4.app.Fragment;
@@ -48,6 +49,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -56,6 +58,10 @@ import android.view.SurfaceHolder;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import net.majorkernelpanic.spydroid.ui.Permission;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.LinkedList;
 
 /** 
  * Spydroid basically launches an RTSP server and an HTTP server, 
@@ -80,6 +86,117 @@ public class SpydroidActivity extends FragmentActivity {
 	private CustomHttpServer mHttpServer;
 	private RtspServer mRtspServer;
 
+	public boolean hasH264File() {
+		String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File file = new File(dir);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains(".h264")) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public void moveH264File(String dir) {
+		String dir_tmp = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File file = new File(dir_tmp);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains(".h264")) {
+						try {
+							String cmd = "mv " + file2.toString() + " " + dir;
+							Runtime.getRuntime().exec(cmd);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public boolean hasAacFile() {
+		String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File file = new File(dir);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains(".aac")) {
+						return true;
+					}
+				}
+			}
+			return false;
+		}
+		return false;
+	}
+
+	public void moveAacFile(String dir) {
+		String dir_tmp = Environment.getExternalStorageDirectory().getAbsolutePath();
+		File file = new File(dir_tmp);
+		if (file.exists()) {
+			LinkedList<File> list = new LinkedList<File>();
+			File[] files = file.listFiles();
+			for (File file2 : files) {
+				if (file2.isDirectory()) {
+					continue;
+				} else {
+					if (file2.toString().contains(".aac")) {
+						try {
+							String cmd = "mv " + file2.toString() + " " + dir;
+							Runtime.getRuntime().exec(cmd);
+							//Log.e(TAG, "david1218 aac cmd = " + cmd);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+	}
+
+	private void mvOldH264AndAacFile() {
+		if (!hasH264File() && !hasAacFile())
+			return;
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month +1;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		//Log.i(TAG, ""+year+month+day+hour+minute+second);
+		String dir=Environment.getExternalStorageDirectory().getAbsolutePath() + "/"+year+month+day+hour+minute+second;
+		String cmd1 = "mkdir " + dir;
+		try {
+			Runtime.getRuntime().exec(cmd1);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		moveH264File(dir);
+		moveAacFile(dir);
+	}
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
@@ -88,6 +205,9 @@ public class SpydroidActivity extends FragmentActivity {
 		setContentView(R.layout.spydroid);
 
 		Permission.checkDrawOverlaysPermission(this);
+
+		//add for move the old h264 and aac file to dir
+		mvOldH264AndAacFile();
 
 		if (findViewById(R.id.handset_pager) != null) {
 

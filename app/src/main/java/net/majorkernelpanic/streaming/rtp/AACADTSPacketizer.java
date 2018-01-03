@@ -52,16 +52,27 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 	private int samplingRate = 8000;
 
 	public static String oldPath = null;
+	public static String oldPathSecond = null;
 	public static BufferedOutputStream oldOutputStream = null;
+	public static BufferedOutputStream oldOutputStreamSecond = null;
 	public static boolean willCreateNewFile = false;
+	public static boolean willCreateNewFileSecond = false;
+	public static boolean isChannelSecond = false;
+
+    public static int count1 = 0;
+    public static int count2 = 0;
+
+	private BufferedOutputStream outputStream_second;
+	private String path_second;
+
+	public static boolean isCreateNewFileSecond = false;
+
 
 	public AACADTSPacketizer() {
 		super();
-		Log.e(TAG, "guoyuefeng1123 AACADTSPacketizer()");
 	}
 
 	public void start() {
-		Log.e(TAG, "guoyuefeng1123 start()");
 		createfile();
 		if (t==null) {
 			t = new Thread(this);
@@ -111,7 +122,13 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		long oldtime1 = 0;
 		try {
 			while (!Thread.interrupted()) {
+				if (isCreateNewFileSecond) {
+					Log.e(TAG, "aac create second channel file");
+					createfile_sencond();
+					isCreateNewFileSecond = false;
+				}
 				if (willCreateNewFile) {
+					Log.e(TAG, "aac willCreateNewFile");
 					oldPath = path;
 					oldOutputStream = outputStream;
 					createfile();
@@ -120,6 +137,15 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 						oldOutputStream.close();
 					}
 					willCreateNewFile = false;
+				} else if (willCreateNewFileSecond) {
+					oldPathSecond = path_second;
+					oldOutputStreamSecond = outputStream_second;
+					createfile_sencond();
+					if (oldOutputStreamSecond != null) {
+						oldOutputStreamSecond.flush();
+						oldOutputStreamSecond.close();
+					}
+					willCreateNewFileSecond = false;
 				}
 				// Synchronisation: ADTS packet starts with 12bits set to 1
 				header[0] = (byte)0xFF;
@@ -128,6 +154,11 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 						header[1] = (byte) is.read();
 						if ( (header[1]&0xF0) == 0xF0) {
 							outputStream.write(header, 0, 2);
+							if (isChannelSecond) {
+								if (outputStream_second != null)
+									outputStream_second.write(header, 0, 2);
+							}
+
 							break;
 						}
 					}
@@ -150,7 +181,6 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 				nbpk = frameLength/MAXPACKETSIZE + 1;
 
 				// Read CRS if any
-				//Log.e(TAG, "david4 read 333");
 				if (!protection) is.read(header,0,2);
 
 				samplingRate = AACStream.AUDIO_SAMPLING_RATES[(header[2]&0x3C) >> 2];
@@ -211,12 +241,15 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 	private int fill(byte[] buffer, int offset,int length) throws IOException {
 		int sum = 0, len;
 		while (sum<length) {
-			//Log.e(TAG, "david4 read 444");
 			len = is.read(buffer, offset+sum, length-sum);
 			if (len<0) {
 				throw new IOException("End of stream");
 			} else {
 				outputStream.write(buffer, offset+sum, length-sum);
+				if (isChannelSecond) {
+					if (outputStream_second != null)
+						outputStream_second.write(buffer, offset+sum, length-sum);
+				}
 				sum+=len;
 			}
 		}
@@ -233,9 +266,10 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		int minute=t.minute;
 		int second=t.second;
 		Log.i(TAG, ""+year+month+day+hour+minute+second);
-		String filename=""+year+month+day+hour+minute+second;
+		//String filename=""+year+month+day+hour+minute+second;
+        String filename = "SPY_" + count1;
 		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".aac";
-		Log.e(TAG, "guoyuefeng1123 aac createfile() path = [" + path + "]");
+		Log.e(TAG, "aac createfile() path = [" + path + "]");
 		File file = new File(path);
 		if(file.exists()){
 			file.delete();
@@ -245,5 +279,32 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
+		count1++;
+	}
+
+	private void createfile_sencond(){
+		Time t=new Time();
+		t.setToNow();
+		int year=t.year;
+		int month=t.month +1;
+		int day=t.monthDay;
+		int hour=t.hour;
+		int minute=t.minute;
+		int second=t.second;
+		Log.i(TAG, ""+year+month+day+hour+minute+second);
+		//String filename=""+year+month+day+hour+minute+second+"_second";
+        String filename= "SPY_" + count2;;
+		path_second = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.aac";
+		Log.e(TAG, "aac createfile() path = [" + path + "]");
+		File file = new File(path_second);
+		if(file.exists()){
+			file.delete();
+		}
+		try {
+			outputStream_second = new BufferedOutputStream(new FileOutputStream(file));
+		} catch (Exception e){
+			e.printStackTrace();
+		}
+		count2++;
 	}
 }
