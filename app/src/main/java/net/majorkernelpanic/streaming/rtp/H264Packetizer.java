@@ -42,6 +42,7 @@ import android.text.format.Time;
 import android.util.Log;
 
 import net.majorkernelpanic.jni.FFmpegJni;
+import net.majorkernelpanic.spydroid.SpydroidApplication;
 import net.majorkernelpanic.spydroid.ui.SpydroidActivity;
 
 import static android.R.attr.path;
@@ -83,6 +84,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	private static int count2 = 0;
 
 	private boolean willCreateNewFile = false;
+	private SpydroidApplication mApplication;
 	public static final int SIZETYPE_B = 1;//获取文件大小单位为B的double值
 	public static final int SIZETYPE_KB = 2;//获取文件大小单位为KB的double值
 	public static final int SIZETYPE_MB = 3;//获取文件大小单位为MB的double值
@@ -100,6 +102,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		} else if (2 == channel) {
 			videoChannel = 2;
 		}
+		mApplication = SpydroidApplication.getInstance();
 	}
 
 	public void start() {
@@ -584,129 +587,131 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			if (len<0) {
 				throw new IOException("End of stream");
 			} else {
-				if (willCreateNewFile) {
-					if (5 == length) {
-						if((int)buffer[4] == 101) {
-							if (1 == videoChannel) {
-								AACADTSPacketizer.willCreateNewFile = true;
-								oldtime1 = 0;
-								oldPath = path;
-								oldOutputStream = outputStream;
-								new Thread(new Runnable() {
-									@Override
-									public void run() {
-										while (true) {
-											if ((AACADTSPacketizer.oldPath != null) && (oldPath != null)) {
-												if (oldOutputStream != null) {
-													try {
-														oldOutputStream.flush();
-														oldOutputStream.close();
-													} catch (IOException e) {
-														e.printStackTrace();
+				if(mApplication.mSave){
+					if (willCreateNewFile) {
+						if (5 == length) {
+							if((int)buffer[4] == 101) {
+								if (1 == videoChannel) {
+									AACADTSPacketizer.willCreateNewFile = true;
+									oldtime1 = 0;
+									oldPath = path;
+									oldOutputStream = outputStream;
+									new Thread(new Runnable() {
+										@Override
+										public void run() {
+											while (true) {
+												if ((AACADTSPacketizer.oldPath != null) && (oldPath != null)) {
+													if (oldOutputStream != null) {
+														try {
+															oldOutputStream.flush();
+															oldOutputStream.close();
+														} catch (IOException e) {
+															e.printStackTrace();
+														}
 													}
-												}
 
-												if (AACADTSPacketizer.oldOutputStream != null) {
-													try {
-														AACADTSPacketizer.oldOutputStream.flush();
-														AACADTSPacketizer.oldOutputStream.close();
-													} catch (IOException e) {
-														e.printStackTrace();
+													if (AACADTSPacketizer.oldOutputStream != null) {
+														try {
+															AACADTSPacketizer.oldOutputStream.flush();
+															AACADTSPacketizer.oldOutputStream.close();
+														} catch (IOException e) {
+															e.printStackTrace();
+														}
 													}
+
+													String[] name = new String[2];
+													name[0] = new String(AACADTSPacketizer.oldPath);
+													name[1] = new String(oldPath);
+													pathMaps.add(name);
+
+													if (!isThreadFfmpegBegin) {
+														getMp4FromFfmpeg();
+														isThreadFfmpegBegin = true;
+													}
+
+
+													oldOutputStream = null;
+													oldPath = null;
+													AACADTSPacketizer.oldOutputStream = null;
+													AACADTSPacketizer.oldPath = null;
+													break;
 												}
-
-												String[] name = new String[2];
-												name[0] = new String(AACADTSPacketizer.oldPath);
-												name[1] = new String(oldPath);
-												pathMaps.add(name);
-
-												if (!isThreadFfmpegBegin) {
-													getMp4FromFfmpeg();
-													isThreadFfmpegBegin = true;
-												}
-
-
-												oldOutputStream = null;
-												oldPath = null;
-												AACADTSPacketizer.oldOutputStream = null;
-												AACADTSPacketizer.oldPath = null;
-												break;
 											}
 										}
-									}
-								}).start();
-							} else if (2 == videoChannel) {
-								AACADTSPacketizer.willCreateNewFileSecond = true;
-								oldtime1 = 0;
-								oldPath = path;
-								oldOutputStream = outputStream;
-								Log.e(TAG, "oldPath = " + oldPath);
-								new Thread(new Runnable() {
-									@Override
-									public void run() {
-										while (true) {
-											if ((AACADTSPacketizer.oldPathSecond != null) && (oldPath != null)) {
-												if (oldOutputStream != null) {
-													try {
-														oldOutputStream.flush();
-														oldOutputStream.close();
-													} catch (IOException e) {
-														e.printStackTrace();
+									}).start();
+								} else if (2 == videoChannel) {
+									AACADTSPacketizer.willCreateNewFileSecond = true;
+									oldtime1 = 0;
+									oldPath = path;
+									oldOutputStream = outputStream;
+									Log.e(TAG, "oldPath = " + oldPath);
+									new Thread(new Runnable() {
+										@Override
+										public void run() {
+											while (true) {
+												if ((AACADTSPacketizer.oldPathSecond != null) && (oldPath != null)) {
+													if (oldOutputStream != null) {
+														try {
+															oldOutputStream.flush();
+															oldOutputStream.close();
+														} catch (IOException e) {
+															e.printStackTrace();
+														}
 													}
-												}
 
-												if (AACADTSPacketizer.oldOutputStreamSecond != null) {
-													try {
-														AACADTSPacketizer.oldOutputStreamSecond.flush();
-														AACADTSPacketizer.oldOutputStreamSecond.close();
-													} catch (IOException e) {
-														e.printStackTrace();
+													if (AACADTSPacketizer.oldOutputStreamSecond != null) {
+														try {
+															AACADTSPacketizer.oldOutputStreamSecond.flush();
+															AACADTSPacketizer.oldOutputStreamSecond.close();
+														} catch (IOException e) {
+															e.printStackTrace();
+														}
 													}
+
+													String[] name = new String[2];
+													name[0] = new String(AACADTSPacketizer.oldPathSecond);
+													name[1] = new String(oldPath);
+													pathMaps.add(name);
+
+													oldOutputStream = null;
+													oldPath = null;
+													AACADTSPacketizer.oldOutputStreamSecond = null;
+													AACADTSPacketizer.oldPathSecond = null;
+													break;
 												}
-
-												String[] name = new String[2];
-												name[0] = new String(AACADTSPacketizer.oldPathSecond);
-												name[1] = new String(oldPath);
-												pathMaps.add(name);
-
-												oldOutputStream = null;
-												oldPath = null;
-												AACADTSPacketizer.oldOutputStreamSecond = null;
-												AACADTSPacketizer.oldPathSecond = null;
-												break;
 											}
 										}
-									}
-								}).start();
+									}).start();
+								}
+								createfile();
+								if (sps != null) {
+									byte[] buf = new byte[sps.length+4];
+									buf[0] = 0x00;
+									buf[1] = 0x00;
+									buf[2] = 0x00;
+									buf[3] = 0x01;
+									System.arraycopy(sps, 0, buf, 4, sps.length);
+									outputStream.write(buf, 0, sps.length+4);
+								}
+								if (pps != null) {
+									byte[] buf = new byte[sps.length+4];
+									buf[0] = 0x00;
+									buf[1] = 0x00;
+									buf[2] = 0x00;
+									buf[3] = 0x01;
+									System.arraycopy(pps, 0, buf, 4, pps.length);
+									outputStream.write(buf, 0, pps.length+4);
+								}
+								if (oldOutputStream != null) {
+									oldOutputStream.flush();
+									oldOutputStream.close();
+								}
+								willCreateNewFile = false;
 							}
-							createfile();
-							if (sps != null) {
-								byte[] buf = new byte[sps.length+4];
-								buf[0] = 0x00;
-								buf[1] = 0x00;
-								buf[2] = 0x00;
-								buf[3] = 0x01;
-								System.arraycopy(sps, 0, buf, 4, sps.length);
-								outputStream.write(buf, 0, sps.length+4);
-							}
-							if (pps != null) {
-								byte[] buf = new byte[sps.length+4];
-								buf[0] = 0x00;
-								buf[1] = 0x00;
-								buf[2] = 0x00;
-								buf[3] = 0x01;
-								System.arraycopy(pps, 0, buf, 4, pps.length);
-								outputStream.write(buf, 0, pps.length+4);
-							}
-							if (oldOutputStream != null) {
-								oldOutputStream.flush();
-								oldOutputStream.close();
-							}
-							willCreateNewFile = false;
 						}
 					}
+					outputStream.write(buffer, offset + sum, length - sum);
 				}
-				outputStream.write(buffer, offset + sum, length - sum);
 				sum+=len;
 			}
 		}
