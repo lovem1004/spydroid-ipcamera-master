@@ -600,7 +600,8 @@ public abstract class VideoStream extends MediaStream {
 					parameters.setFlashMode(mFlashEnabled?Parameters.FLASH_MODE_TORCH:Parameters.FLASH_MODE_OFF);
 				}
 				parameters.setRecordingHint(true);
-				parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+				if (mCameraId != 1)
+				    parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
 				mCamera.setParameters(parameters);
 				mCamera.setDisplayOrientation(mOrientation);
 
