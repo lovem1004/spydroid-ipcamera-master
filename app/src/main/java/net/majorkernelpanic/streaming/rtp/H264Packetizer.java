@@ -74,8 +74,8 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	long oldtime1 = 0;
 	private BufferedOutputStream outputStream;
 	private BufferedOutputStream oldOutputStream;
-	private static int channel = 0;
-	private int videoChannel = -1;
+	public static int channel = 0;
+	private int videoChannel = 1;
 	private static boolean isThreadFfmpegBegin = false;
     private static int timeCount = 0;
 	private static String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
@@ -83,6 +83,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	private static int count1 = 0;
 	private static int count2 = 0;
 
+	private boolean isFirstCreateFile = false;
 	private boolean willCreateNewFile = false;
 	private SpydroidApplication mApplication;
 	public static final int SIZETYPE_B = 1;//获取文件大小单位为B的double值
@@ -96,18 +97,13 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	public H264Packetizer() {
 		super();
 		socket.setClockFrequency(90000);
-		channel++;
-		if (1 == channel) {
-			videoChannel = 1;
-		} else if (2 == channel) {
-			videoChannel = 2;
-		}
+
 		mApplication = SpydroidApplication.getInstance();
 	}
 
 	public void start() {
 		Log.d(TAG,"start.......");
-		createfile();
+		//createfile();
 		if (t == null) {
 			t = new Thread(this);
 			t.start();
@@ -115,9 +111,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	public void stop() throws IOException {
-		Log.e(TAG, "david1215 stop videoChannel = " + videoChannel);
 		if (!isThreadFfmpegBegin) {
-			Log.e(TAG, "david0102 call 22222");
 			getMp4FromFfmpeg();
 			isThreadFfmpegBegin = true;
 		}
@@ -145,6 +139,12 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}	
 
 	public void run() {
+		channel++;
+		if (1 == channel) {
+			videoChannel = 1;
+		} else if (2 == channel) {
+			videoChannel = 2;
+		}
 		long duration = 0, delta2 = 0;
 		long delta3 = 0;
 		Log.d(TAG,"H264 packetizer started !");
@@ -166,7 +166,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		}
 		try {
 			while (!Thread.interrupted()) {
-				if (1 == videoChannel) {
+				//if (1 == videoChannel) {
 					if ((int) oldtime1 == 0) {
 						oldtime1 = System.nanoTime();
 					}
@@ -175,7 +175,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 							willCreateNewFile = true;
 						}
 					}
-				}
+				//}
 				oldtime = System.nanoTime();
 				// We read a NAL units from the input stream and we send them
 				send();
@@ -423,7 +423,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				ArrayList<String[]> pathCollect = new ArrayList<String[]>();
 
 				while (true) {
-					Log.e(TAG, "david1215 run in while loop");
+					//Log.e(TAG, "david1215 run in while loop");
 					if (!pathMaps.isEmpty()) {
 						pathCollect = (ArrayList<String[]>) pathMaps.clone();
 					}
@@ -434,7 +434,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 						e.printStackTrace();
 					}
 					if (pathCollect.isEmpty()) {
-						Log.e(TAG, "david1215 timeCount = " + timeCount);
+						//Log.e(TAG, "david1215 timeCount = " + timeCount);
                         if (timeCount > 30) { //5 minutes
                             break;
                         }
@@ -446,7 +446,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
                         timeCount++;
                         continue;
                     } else {
-						Log.e(TAG, "david1215 timeCount will set to 0");
+						//Log.e(TAG, "david1215 timeCount will set to 0");
                         timeCount = 0;
                     }
 
@@ -474,7 +474,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 
 					File fileAac = new File(aacPath);
 					if (fileAac.exists()) {
-						Log.e(TAG, "david1218 delete aac file: " + aacPath);
+						//Log.e(TAG, "david1218 delete aac file: " + aacPath);
 						fileAac.delete();
 					}
 
@@ -482,7 +482,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 					pathCollect.remove(0);
 				}
 
-				Log.e(TAG, "david1215 run outof while loop");
+				//Log.e(TAG, "david1215 run outof while loop");
 
 				h264FileNames.clear();
 				aacFileNames.clear();
@@ -588,6 +588,39 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 				throw new IOException("End of stream");
 			} else {
 				if(mApplication.mSave){
+					if (!isFirstCreateFile) {
+						if((int)buffer[4] == 101) {
+							createfile();
+							if (sps != null) {
+								byte[] buf = new byte[sps.length+4];
+								buf[0] = 0x00;
+								buf[1] = 0x00;
+								buf[2] = 0x00;
+								buf[3] = 0x01;
+								System.arraycopy(sps, 0, buf, 4, sps.length);
+								if (outputStream != null)
+									outputStream.write(buf, 0, sps.length+4);
+							}
+							if (pps != null) {
+								byte[] buf = new byte[sps.length+4];
+								buf[0] = 0x00;
+								buf[1] = 0x00;
+								buf[2] = 0x00;
+								buf[3] = 0x01;
+								System.arraycopy(pps, 0, buf, 4, pps.length);
+								if (outputStream != null)
+									outputStream.write(buf, 0, pps.length+4);
+							}
+							isFirstCreateFile = true;
+							if (1 == videoChannel) {
+								//Log.e(TAG, "david0103 AACADTSPacketizer.firstCreateNewFile = true");
+								AACADTSPacketizer.firstCreateNewFile = true;
+							} else if (2 == videoChannel) {
+								//Log.e(TAG, "david0103 AACADTSPacketizer.firstCreateNewFileSecond = true");
+								AACADTSPacketizer.firstCreateNewFileSecond = true;
+							}
+						}
+					}
 					if (willCreateNewFile) {
 						if (5 == length) {
 							if((int)buffer[4] == 101) {
@@ -710,7 +743,9 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 							}
 						}
 					}
-					outputStream.write(buffer, offset + sum, length - sum);
+					if (outputStream != null) {
+						outputStream.write(buffer, offset + sum, length - sum);
+					}
 				}
 				sum+=len;
 			}
@@ -764,10 +799,12 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		//String filename=""+year+month+day+hour+minute+second;
 		String filename;
 		if (2 == videoChannel) {
+			//Log.e(TAG, "david0103 videoChannel == 2");
 			filename = "SPY_" + count2;
 			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.h264";
 			count2++;
 		} else {
+			//Log.e(TAG, "david0103 videoChannel == 1");
 			filename = "SPY_" + count1;
 			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
 			count1++;
@@ -950,5 +987,10 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		long size = statfs.getBlockSize();//获取分区的大小
 		long count = statfs.getAvailableBlocks();//获取可用分区块的个数
 		return size*count;
+	}
+
+	protected void finalize( )
+	{
+		Log.e(TAG, "h264 finalize");
 	}
 }

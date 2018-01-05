@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import net.majorkernelpanic.spydroid.SpydroidApplication;
 import net.majorkernelpanic.streaming.audio.AACStream;
 
 import android.os.Environment;
@@ -57,6 +58,10 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 	public static BufferedOutputStream oldOutputStreamSecond = null;
 	public static boolean willCreateNewFile = false;
 	public static boolean willCreateNewFileSecond = false;
+
+	public static boolean firstCreateNewFile = false;
+	public static boolean firstCreateNewFileSecond = false;
+
 	public static boolean isChannelSecond = false;
 
     public static int count1 = 0;
@@ -73,7 +78,8 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 	}
 
 	public void start() {
-		createfile();
+		//Log.e(TAG, "david0103 aac file start");
+		//createfile();
 		if (t==null) {
 			t = new Thread(this);
 			t.start();
@@ -122,10 +128,20 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		long oldtime1 = 0;
 		try {
 			while (!Thread.interrupted()) {
-				if (isCreateNewFileSecond) {
-					Log.e(TAG, "aac create second channel file");
+//				if (isCreateNewFileSecond) {
+//					Log.e(TAG, "aac create second channel file");
+//					createfile_sencond();
+//					isCreateNewFileSecond = false;
+//				}
+
+				if (firstCreateNewFile) {
+					//Log.e(TAG, "david0103 aac create file");
+					createfile();
+					firstCreateNewFile = false;
+				} else if (firstCreateNewFileSecond) {
+					//Log.e(TAG, "david0103 aac create file second");
 					createfile_sencond();
-					isCreateNewFileSecond = false;
+					firstCreateNewFileSecond = false;
 				}
 				if (willCreateNewFile) {
 					Log.e(TAG, "aac willCreateNewFile");
@@ -153,7 +169,8 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 					if ( (is.read()&0xFF) == 0xFF ) {
 						header[1] = (byte) is.read();
 						if ( (header[1]&0xF0) == 0xF0) {
-							outputStream.write(header, 0, 2);
+							if (outputStream != null)
+								outputStream.write(header, 0, 2);
 							if (isChannelSecond) {
 								if (outputStream_second != null)
 									outputStream_second.write(header, 0, 2);
@@ -245,7 +262,8 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 			if (len<0) {
 				throw new IOException("End of stream");
 			} else {
-				outputStream.write(buffer, offset+sum, length-sum);
+				if (outputStream != null)
+					outputStream.write(buffer, offset+sum, length-sum);
 				if (isChannelSecond) {
 					if (outputStream_second != null)
 						outputStream_second.write(buffer, offset+sum, length-sum);

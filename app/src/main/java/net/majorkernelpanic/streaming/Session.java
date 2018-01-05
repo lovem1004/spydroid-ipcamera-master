@@ -38,6 +38,7 @@ import net.majorkernelpanic.streaming.video.VideoStream;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.util.Log;
 
 /**
  * You should instantiate this class with the {@link SessionBuilder}.<br />

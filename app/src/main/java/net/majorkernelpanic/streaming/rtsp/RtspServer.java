@@ -38,6 +38,7 @@ import java.util.regex.Pattern;
 
 import net.majorkernelpanic.streaming.Session;
 import net.majorkernelpanic.streaming.SessionBuilder;
+import net.majorkernelpanic.streaming.rtp.H264Packetizer;
 import net.majorkernelpanic.streaming.video.PopupManager;
 
 import android.app.Service;
@@ -584,6 +585,7 @@ public class RtspServer extends Service {
 			/* ********************************* Method OPTIONS ********************************* */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("OPTIONS")) {
+				Log.e(TAG, "david0104 OPTIONS");
 				response.status = Response.STATUS_OK;
 				response.attributes = "Public: DESCRIBE,SETUP,TEARDOWN,PLAY,PAUSE\r\n";
 				response.status = Response.STATUS_OK;
@@ -593,6 +595,7 @@ public class RtspServer extends Service {
 			/* ********************************** Method SETUP ********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("SETUP")) {
+				Log.e(TAG, "david0104 SETUP");
 				Pattern p; Matcher m;
 				int p2, p1, ssrc, trackId, src[];
 				String destination;
@@ -633,7 +636,9 @@ public class RtspServer extends Service {
 				
 				boolean streaming = isStreaming();
 				mSession.syncStart(trackId);
+				Log.e(TAG, "guoyuefeng0104 setup111");
 				if (!streaming && isStreaming()) {
+					Log.e(TAG, "guoyuefeng0104 setup222");
 					postMessage(MESSAGE_STREAMING_STARTED);
 				}
 
@@ -656,6 +661,7 @@ public class RtspServer extends Service {
 			/* ********************************** Method PLAY *********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("PLAY")) {
+				Log.e(TAG, "david0104 PLAY");
 				String requestAttributes = "RTP-Info: ";
 				if (mSession.trackExists(0)) requestAttributes += "url=rtsp://"+mClient.getLocalAddress().getHostAddress()+":"+mClient.getLocalPort()+"/trackID="+0+";seq=0,";
 				if (mSession.trackExists(1)) requestAttributes += "url=rtsp://"+mClient.getLocalAddress().getHostAddress()+":"+mClient.getLocalPort()+"/trackID="+1+";seq=0,";
@@ -665,13 +671,13 @@ public class RtspServer extends Service {
 
 				// If no exception has been thrown, we reply with OK
 				response.status = Response.STATUS_OK;
-
 			}
 
 			/* ********************************************************************************** */
 			/* ********************************** Method PAUSE ********************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("PAUSE")) {
+				Log.e(TAG, "david0104 PAUSE");
 				response.status = Response.STATUS_OK;
 			}
 
@@ -679,6 +685,7 @@ public class RtspServer extends Service {
 			/* ********************************* Method TEARDOWN ******************************** */
 			/* ********************************************************************************** */
 			else if (request.method.equalsIgnoreCase("TEARDOWN")) {
+				Log.e(TAG, "david0104 TEARDOWN");
 				response.status = Response.STATUS_OK;
 			}
 
