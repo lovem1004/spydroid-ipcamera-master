@@ -2,6 +2,12 @@
 <resources>
     <string name="options">Настройки</string>
     <string name="quit">Выход</string>
+    <string name="turntopop">Popup</string>
+    <string name="save">Save</string>
+    <string name="settings33">RTSP server port two</string>
+    <string name="allow_draw_overlays_title">Allow Spydroid player popup over other apps</string>
+    <string name="allow_sdraw_overlays_description">Spydroid needs you to grant this permission display your video in a popup over other applications.</string>
+    <string name="permission_ask_again">Grant permission</string>
     <string name="app_name">Spydroid</string>
     <string name="description">Передача потокового видео и звука с вашего смартфона через Spydroid</string>
     <string name="line1">Откройте в chrome или firefox</string>
