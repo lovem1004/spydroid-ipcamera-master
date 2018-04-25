@@ -75,6 +75,13 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 
 	public AACADTSPacketizer() {
 		super();
+		File spy_dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY");
+		if (spy_dir.exists()) {
+			Log.e(TAG, "SPY dir exist");
+		} else {
+			Log.e(TAG, "SPY dir not exist, will create it");
+			spy_dir.mkdir();
+		}
 	}
 
 	public void start() {
@@ -286,7 +293,7 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		Log.i(TAG, ""+year+month+day+hour+minute+second);
 		//String filename=""+year+month+day+hour+minute+second;
         String filename = "SPY_" + count1;
-		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".aac";
+		path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + ".aac";
 		Log.e(TAG, "aac createfile() path = [" + path + "]");
 		File file = new File(path);
 		if(file.exists()){
@@ -312,7 +319,7 @@ public class AACADTSPacketizer extends AbstractPacketizer implements Runnable {
 		Log.i(TAG, ""+year+month+day+hour+minute+second);
 		//String filename=""+year+month+day+hour+minute+second+"_second";
         String filename= "SPY_" + count2;;
-		path_second = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.aac";
+		path_second = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + "_second.aac";
 		Log.e(TAG, "aac createfile() path = [" + path + "]");
 		File file = new File(path_second);
 		if(file.exists()){

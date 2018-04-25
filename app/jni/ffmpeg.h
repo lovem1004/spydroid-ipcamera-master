@@ -629,6 +629,8 @@ void show_usage(void);
 void opt_output_file(void *optctx, const char *filename);
 
 void remove_avoptions(AVDictionary **a, AVDictionary *b);
+//add by guoyuefeng
+int muxer_main(char *inputH264FileName,char *inputAacFileName,char *outMP4FileName,char* angle);
 void assert_avoptions(AVDictionary *m);
 
 int guess_input_channel_layout(InputStream *ist);

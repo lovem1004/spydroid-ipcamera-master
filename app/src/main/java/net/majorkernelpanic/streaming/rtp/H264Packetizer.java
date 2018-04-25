@@ -99,6 +99,13 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		socket.setClockFrequency(90000);
 
 		mApplication = SpydroidApplication.getInstance();
+		File spy_dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY");
+		if (spy_dir.exists()) {
+			Log.e(TAG, "SPY dir exist");
+		} else {
+			Log.e(TAG, "SPY dir not exist, will create it");
+			spy_dir.mkdir();
+		}
 	}
 
 	public void start() {
@@ -343,7 +350,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	public static int getNumbers1(String str) {
-		char[] chr2 = new char[20];
+		char[] chr2 = new char[40];
 		str.getChars(20,str.length(),chr2,0);
 		String str_result = new String(chr2);
 		return getNumbers(str_result);
@@ -353,12 +360,12 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		Collections.sort(list, new Comparator<Object>() {
 			@Override
 			public int compare(Object o1, Object o2) {
-				char[] chr1 = new char[20];
+				char[] chr1 = new char[40];
 				((String)o1).getChars(20,((String)o1).length(),chr1,0);
 				String str1 = new String(chr1);
 				//Log.e(TAG, "str1 = [" + str1 + "]");
 
-				char[] chr2 = new char[20];
+				char[] chr2 = new char[40];
 				((String)o2).getChars(20,((String)o2).length(),chr2,0);
 				String str2 = new String(chr2);
 				//Log.e(TAG, "str2 = [" + str2 + "]");
@@ -415,7 +422,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 			ArrayList<String> aacFileNames = new ArrayList<String>();
 			ArrayList<String> h264FileNames_second = new ArrayList<String>();
 			ArrayList<String> aacFileNames_second = new ArrayList<String>();
-			String dir = Environment.getExternalStorageDirectory().getAbsolutePath();
+			String dir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY";
 			String[] commands = new String[10];
 
 			@Override
@@ -435,11 +442,11 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 					}
 					if (pathCollect.isEmpty()) {
 						//Log.e(TAG, "david1215 timeCount = " + timeCount);
-                        if (timeCount > 30) { //5 minutes
+                        if (timeCount > 30) { //25 minutes
                             break;
                         }
                         try {
-                            Thread.sleep(10000);
+                            Thread.sleep(50000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -463,8 +470,17 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 					commands[6] = "0:0";
 					commands[7] = "-map";
 					commands[8] = "1:0";
-					commands[9] = getOutputFileName();
+					if (h264Path.contains("_second.h264")) {
+						commands[9] = getOutputFileName_second();
+					} else {
+						commands[9] = getOutputFileName();
+					}
+
+					Log.e(TAG, "getMp4FromFfmeg 111 run aacpath = [" + commands[2] + "]");
+					Log.e(TAG, "getMp4FromFfmeg 111 run h264Path = [" + commands[4] + "]");
+					Log.e(TAG, "will call ffmpeg to merge mp4 begin");
 					int result = FFmpegJni.run(commands);
+					Log.e(TAG, "will call ffmpeg to merge mp4 end and result = " + result);
 
 					File fileH264 = new File(h264Path);
 					if (fileH264.exists()) {
@@ -523,6 +539,8 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 						 commands[7] = "-map";
 						 commands[8] = "1:0";
 						 commands[9] = getOutputFileName();
+						 Log.e(TAG, "getMp4FromFfmeg 222 run aacpath = [" + commands[2] + "]");
+						 Log.e(TAG, "getMp4FromFfmeg 222 run h264Path = [" + commands[4] + "]");
 						 int result = FFmpegJni.run(commands);
 						 try {
 							 //Log.e(TAG, "will delete the aac file and h264 file");
@@ -567,6 +585,8 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 						commands[7] = "-map";
 						commands[8] = "1:0";
 						commands[9] = getOutputFileName_second();
+						Log.e(TAG, "getMp4FromFfmeg 333 run aacName_second = [" + commands[2] + "]");
+						Log.e(TAG, "getMp4FromFfmeg 333 run h264Name_second = [" + commands[4] + "]");
 						int result = FFmpegJni.run(commands);
 						try {
 							//Log.e(TAG, "will delete the aac file and h264 file");
@@ -787,6 +807,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	private void createfile(){
+		Log.e(TAG, "guoyuefeng0424 create file");
 		Time t=new Time();
 		t.setToNow();
 		int year=t.year;
@@ -799,14 +820,16 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		//String filename=""+year+month+day+hour+minute+second;
 		String filename;
 		if (2 == videoChannel) {
+			Log.e(TAG, "guoyuefeng0424 create file 111 second");
 			//Log.e(TAG, "david0103 videoChannel == 2");
 			filename = "SPY_" + count2;
-			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.h264";
+			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + "_second.h264";
 			count2++;
 		} else {
+			Log.e(TAG, "guoyuefeng0424 create file 111");
 			//Log.e(TAG, "david0103 videoChannel == 1");
 			filename = "SPY_" + count1;
-			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".h264";
+			path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + ".h264";
 			count1++;
 		}
 		File file = new File(path);
@@ -831,7 +854,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		int second=t.second;
 		//Log.i(TAG, "SPY_"+year+month+day+hour+minute+second);
 		String filename="SPY_"+year+month+day+hour+minute+second;
-		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + ".mp4";
+		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + ".mp4";
 		return outputName;
 	}
 
@@ -846,7 +869,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 		int second=t.second;
 		//Log.i(TAG, ""+year+month+day+hour+minute+second);
 		String filename="SPY_"+year+month+day+hour+minute+second;
-		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename + "_second.mp4";
+		String outputName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY" + "/" + filename + "_second.mp4";
 		return outputName;
 	}
 
@@ -939,7 +962,7 @@ public class H264Packetizer extends AbstractPacketizer implements Runnable {
 	}
 
 	private void DeleteOldFile(){
-		String path1 = Environment.getExternalStorageDirectory().getAbsolutePath();
+		String path1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/SPY";
 		File parentFile = new File(path1);
 		File fileswp = null;
 		File[] files = parentFile.listFiles(fileFilter);//通过fileFileter过滤器来获取parentFile路径下的想要类型的子文件

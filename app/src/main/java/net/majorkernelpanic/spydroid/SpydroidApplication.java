@@ -50,9 +50,9 @@ public class SpydroidApplication extends android.app.Application {
 	public final static String TAG = "SpydroidApplication";
 	
 	/** Default quality of video streams. */
-	public VideoQuality videoQuality = new VideoQuality(1920,1080,30,10000000);
+	public VideoQuality videoQuality = new VideoQuality(1920,1080,30,5000000);
 
-	public VideoQuality videoQuality1 = new VideoQuality(1920,1080,30,1000000);
+	public VideoQuality videoQuality1 = new VideoQuality(1920,1080,30,5000000);
 
 	/** By default AMR is the audio encoder. */
 	public int audioEncoder = SessionBuilder.AUDIO_AAC;

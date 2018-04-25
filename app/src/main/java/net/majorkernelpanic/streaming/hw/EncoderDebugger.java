@@ -197,9 +197,16 @@ public class EncoderDebugger {
 		for (int i=0;i<encoders.length;i++) {
 			count += encoders[i].formats.length;
 		}
-		
+		String test123 = "OMX.qcom.video.encoder.avc";
 		// Tries available encoders
 		for (int i=0;i<encoders.length;i++) {
+			Log.e(TAG, "i = " + i + " and encoders.length = " + encoders.length);
+			if (test123.equals(encoders[i].name.toString())) {
+				Log.e(TAG, "encoder = " + encoders[i].name.toString());
+			} else {
+				Log.e(TAG, "encoder = " + encoders[i].name.toString());
+				continue;
+			}
 			for (int j=0;j<encoders[i].formats.length;j++) {
 				reset();
 				
@@ -228,7 +235,7 @@ public class EncoderDebugger {
 					if (VERBOSE) Log.v(TAG, "SPS and PPS in b64: SPS="+mB64SPS+", PPS="+mB64PPS);
 
 					// Feeds the encoder with an image repeatidly to produce some NAL units
-					Log.e(TAG, "david3 call encode 111");
+					Log.e(TAG, "david call encode 111");
 					encode();
 
 					// We now try to decode the NALs with decoders available on the phone
@@ -282,14 +289,14 @@ public class EncoderDebugger {
 					}
 
 					createTestImage();
-					if (!compareChromaPanes(false)) {
-						if (compareChromaPanes(true)) {
-							mNV21.setColorPanesReversed(true);
-							if (VERBOSE) Log.d(TAG, "U and V pane are reversed");
-						} else {
-							throw new RuntimeException("Incorrect U or V pane...");
-						}
-					}
+//					if (!compareChromaPanes(false)) {
+//						if (compareChromaPanes(true)) {
+//							mNV21.setColorPanesReversed(true);
+//							if (VERBOSE) Log.d("david0320", "U and V pane are reversed");
+//						} else {
+//							throw new RuntimeException("Incorrect U or V pane...");
+//						}
+//					}
 
 					saveTestResult(true);
 					Log.v(TAG, "The encoder "+mEncoderName+" is usable with resolution "+mWidth+"x"+mHeight);
@@ -673,7 +680,6 @@ public class EncoderDebugger {
 						}
 					}					
 				}
-				Log.e(TAG, "david3 call releaseOutputBuffer 444");
 				mEncoder.releaseOutputBuffer(index, false);
 			}
 
@@ -688,7 +694,6 @@ public class EncoderDebugger {
 	}
 
 	private long encode() {
-		Log.e(TAG, "david3 encode");
 		int n = 0;
 		long elapsed = 0, now = timestamp();
 		int encOutputIndex = 0, encInputIndex = 0;
@@ -716,7 +721,6 @@ public class EncoderDebugger {
 				mVideo[n] = new byte[info.size];
 				encOutputBuffers[encOutputIndex].clear();
 				encOutputBuffers[encOutputIndex].get(mVideo[n++], 0, info.size);
-				Log.e(TAG, "david3 call releaseOutputBuffer 111");
 				mEncoder.releaseOutputBuffer(encOutputIndex, false);
 				if (n>=NB_ENCODED) {
 					flushMediaCodec(mEncoder);
@@ -794,7 +798,6 @@ public class EncoderDebugger {
 					}
 					j++;
 				}
-				Log.e(TAG, "david3 call releaseOutputBuffer 222");
 				mDecoder.releaseOutputBuffer(decOutputIndex, false);
 				n++;
 			}	
@@ -817,7 +820,6 @@ public class EncoderDebugger {
 	}
 	
 	private void encodeDecode() {
-		Log.e(TAG, "david3 call encode 222");
 		encode();
 		try {
 			configureDecoder();
@@ -835,7 +837,6 @@ public class EncoderDebugger {
 		while (index != MediaCodec.INFO_TRY_AGAIN_LATER) {
 			index = mc.dequeueOutputBuffer(info, 1000000/FRAMERATE);
 			if (index>=0) {
-				Log.e(TAG, "david3 call releaseOutputBuffer 333");
 				mc.releaseOutputBuffer(index, false);
 			}
 		}

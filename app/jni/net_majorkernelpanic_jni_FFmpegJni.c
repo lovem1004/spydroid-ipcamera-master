@@ -11,5 +11,6 @@ JNIEXPORT jint JNICALL Java_net_majorkernelpanic_jni_FFmpegJni_run(JNIEnv *env, 
         argv[i] = (char*) (*env)->GetStringUTFChars(env, js, 0);
     }
     LOGD("----------begin---------");
-    return main(argc, argv);
+    //return main(argc, argv);
+    return muxer_main(argv[4],argv[2],argv[9], "90");
 }
